@@ -4,10 +4,10 @@ namespace ContactHubApi.Repositories.Contacts
 {
     public interface IContactRepository
     {
-        Task<Guid> CreateContact(User user);
-        Task<Contact?> GetContactById(Guid id);
-        Task<IReadOnlyCollection<Contact>> GetAllContacts();
-        Task<bool> UpdateContact(Contact contact);
+        Task<Guid> CreateContact(Contact contact);
         Task<bool> DeleteContact(Guid id);
+        Task<IReadOnlyCollection<Contact>> GetAllContacts(Guid userId);
+        Task<Contact?> GetContactById(Guid id);
+        Task<bool> UpdateContact(Contact contact);
     }
 }

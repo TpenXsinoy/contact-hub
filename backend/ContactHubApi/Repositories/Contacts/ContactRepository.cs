@@ -1,32 +1,53 @@
-﻿using ContactHubApi.Models;
+﻿using ContactHubApi.Context;
+using ContactHubApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContactHubApi.Repositories.Contacts
 {
     public class ContactRepository : IContactRepository
     {
-        public Task<Guid> CreateContact(User user)
+        private readonly ContactHubContext _dbContext;
+
+        public ContactRepository(ContactHubContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task<bool> DeleteContact(Guid id)
+        public async Task<Guid> CreateContact(Contact contact)
         {
-            throw new NotImplementedException();
+            _dbContext.Contacts.Add(contact);
+            await _dbContext.SaveChangesAsync();
+            return contact.Id;
         }
 
-        public Task<IReadOnlyCollection<Contact>> GetAllContacts()
+        public async Task<bool> DeleteContact(Guid id)
         {
-            throw new NotImplementedException();
+            var contacts = await _dbContext.Contacts.FindAsync(id);
+            _dbContext.Contacts.Remove(contacts!);
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Contact?> GetContactById(Guid id)
+        public async Task<IReadOnlyCollection<Contact>> GetAllContacts(Guid userId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Contacts.Where(c => c.UserId == userId).ToListAsync();
         }
 
-        public Task<bool> UpdateContact(Contact contact)
+        public async Task<Contact?> GetContactById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Contacts.Include(c => c.Addresses).FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<bool> UpdateContact(Contact contact)
+        {
+            var existingContact = await _dbContext.Contacts.FindAsync(contact.Id);
+            if (existingContact != null)
+            {
+                _dbContext.Entry(existingContact).CurrentValues.SetValues(contact);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
     }
 }
