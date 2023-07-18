@@ -22,8 +22,8 @@ namespace ContactHubApi.Repositories.Contacts
 
         public async Task<bool> DeleteContact(Guid id)
         {
-            var contacts = await _dbContext.Contacts.FindAsync(id);
-            _dbContext.Contacts.Remove(contacts!);
+            var contact = await _dbContext.Contacts.FindAsync(id);
+            _dbContext.Contacts.Remove(contact!);
             await _dbContext.SaveChangesAsync();
             return true;
         }
