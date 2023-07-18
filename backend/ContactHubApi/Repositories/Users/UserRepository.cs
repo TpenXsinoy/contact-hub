@@ -15,7 +15,7 @@ namespace ContactHubApi.Repositories.Users
         }
 
         public async Task<Guid> CreateUser(User user)
-        { 
+        {
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
             return user.Id;
