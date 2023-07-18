@@ -53,10 +53,14 @@ namespace ContactHubApi.Controllers
                 var user = await _userService.GetUserByUsername(request.Username!);
 
                 if (user == null)
+                {
                     return NotFound($"User {request.Username} is not found");
+                }
 
                 if (!_userService.VerifyPasswordHash(request.Password!, user.PasswordHash, user.PasswordSalt))
+                {
                     return BadRequest("Wrong password!");
+                }
 
                 return Ok(user);
             }
@@ -67,6 +71,27 @@ namespace ContactHubApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates a user
+        /// </summary>
+        /// <param name="request">User details</param>
+        /// <returns>Returns the newly created UserDto details</returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST /api/users/signup
+        ///     {
+        ///         "firstName" : "John",
+        ///         "lastName" : "Doe",
+        ///         "email" : "john.doe@gmail.com",
+        ///         "username" : "john123",
+        ///         "password" : "john111"
+        ///     }
+        /// 
+        /// </remarks>
+        /// <response code="201">Successfully created a user</response>
+        /// <response code="400">User details are invalid</response>
+        /// <response code="500">Internal server error</response>
         [HttpPost("signup")]
         [AllowAnonymous]
         [Consumes("application/json")]
@@ -81,12 +106,16 @@ namespace ContactHubApi.Controllers
                 var isUsernameExist = await _userService.IsUsernameExist(request.Username!);
 
                 if (isUsernameExist)
+                {
                     return BadRequest($"Username {request.Username} is already taken");
+                }
 
                 var isEmailExist = await _userService.IsUserEmailExist(request.Email!);
 
                 if (isEmailExist)
+                {
                     return BadRequest($"Email {request.Email} is already taken");
+                }
 
                 var newUser = await _userService.CreateUser(request);
 
@@ -99,9 +128,32 @@ namespace ContactHubApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a user by id
+        /// </summary>
+        /// <param name="id">User Id</param>
+        /// <returns>Returns UserUIDetailsDto details</returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/users/e9a0db04-5ef8-499b-c1ac-08db86d2cc0d
+        ///     {
+        ///         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        ///         "firstName": "John",
+        ///         "lastName": "Doe",
+        ///         "email": "john.doe@gmail.com",
+        ///         "username": "john123",
+        ///         "passwordHash": "0xFB180C5CD89DFB99182CCEA4A",
+        ///         "passwordSalt": "0xFB180C5CD89DFB99182CCEA4A"
+        ///     }
+        /// 
+        /// </remarks>
+        /// <response code="200">Successfully retrieved user</response>
+        /// <response code="401">User is not authorized to use this endpoint</response>
+        /// <response code="404">User with the given id is not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpGet("{id}", Name = "GetUserById")]
-        [AllowAnonymous]
-        //[Authorize]
+        [Authorize]
         [Produces("application/json")]
         [ProducesResponseType(typeof(UserUIDetailsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -114,7 +166,9 @@ namespace ContactHubApi.Controllers
                 var user = await _userService.GetUserById(id);
 
                 if (user == null)
+                {
                     return NotFound($"User with ID {id} is not found");
+                }
 
                 return Ok(user);
             }
@@ -125,20 +179,45 @@ namespace ContactHubApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a user by username
+        /// </summary>
+        /// <param name="username">Username of user</param>
+        /// <returns>Returns UserUIDetailsDto details</returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/users/e9a0db04-5ef8-499b-c1ac-08db86d2cc0d
+        ///     {
+        ///         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        ///         "firstName": "John",
+        ///         "lastName": "Doe",
+        ///         "email": "john.doe@gmail.com",
+        ///         "username": "john123",
+        ///         "passwordHash": "0xFB180C5CD89DFB99182CCEA4A",
+        ///         "passwordSalt": "0xFB180C5CD89DFB99182CCEA4A"
+        ///     }
+        /// 
+        /// </remarks>
+        /// <response code="200">Successfully retrieved user</response>
+        /// <response code="404">User with the given username is not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpGet("{username}/details", Name = "GetUserByUsername")]
         [AllowAnonymous]
         [Produces("application/json")]
         [ProducesResponseType(typeof(UserUIDetailsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetTakerByUsername(string username)
+        public async Task<IActionResult> GetUserByUsername(string username)
         {
             try
             {
                 var user = await _userService.GetUserByUsername(username);
 
                 if (user == null)
+                {
                     return NotFound($"User {username} is not found");
+                }
 
                 return Ok(user);
             }
@@ -149,9 +228,32 @@ namespace ContactHubApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates a user
+        /// </summary>
+        /// <param name="id">User Id</param>
+        /// <param name="request">UserCreationDto details that will be updated</param>
+        /// <returns>Returns the updated UserUIDetailsDto details</returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     PUT /api/users/e9a0db04-5ef8-499b-c1ac-08db86d2cc0d
+        ///     {
+        ///         "firstName": "John",
+        ///         "lastName": "Doe",
+        ///         "email": "john.doe@gmail.com",
+        ///         "username": "john123",
+        ///         "password": "123"
+        ///     }
+        /// 
+        /// </remarks>
+        /// <response code="200">Successfully retrieved user</response>
+        /// <response code="400">UserCreationDto details are invalid</response>
+        /// <response code="401">User is not authorized to use this endpoint</response>
+        /// <response code="404">User with the given id is not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpPut("{id}")]
-        [AllowAnonymous]
-        //[Authorize]
+        [Authorize]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(UserUIDetailsDto), StatusCodes.Status200OK)]
@@ -166,17 +268,23 @@ namespace ContactHubApi.Controllers
                 var user = await _userService.GetUserById(id);
 
                 if (user == null)
+                {
                     return NotFound($"User with ID {id} is not found");
+                }
 
                 var isUsernameExist = await _userService.IsUsernameExist(request.Username!);
 
                 if (user.Username != request.Username && isUsernameExist)
+                {
                     return BadRequest($"Username {request.Username} is already taken");
+                }
 
                 var isEmailExist = await _userService.IsUserEmailExist(request.Email!);
 
                 if (user.Email != request.Email && isEmailExist)
+                {
                     return BadRequest($"Email {request.Email} is already taken");
+                }
 
                 var updatedUser = await _userService.UpdateUser(id, request);
 
