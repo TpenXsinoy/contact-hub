@@ -12,7 +12,7 @@ namespace ContactHubApi.Dtos.Contacts
         [MaxLength(50, ErrorMessage = "Maximum lenghth for the last name is 50 characters.")]
         public string LastName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "UserId is required.")]
+        [Required(ErrorMessage = "User ID is required.")]
         public Guid UserId { get; set; }
     }
 }
