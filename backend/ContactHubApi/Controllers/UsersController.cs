@@ -36,9 +36,7 @@ namespace ContactHubApi.Controllers
                     return NotFound($"User {request.Username} is not found");
 
                 if (!_userService.VerifyPasswordHash(request.Password!, user.PasswordHash, user.PasswordSalt))
-                {
                     return BadRequest("Wrong password!");
-                }
 
                 return Ok(user);
             }
@@ -82,7 +80,8 @@ namespace ContactHubApi.Controllers
         }
 
         [HttpGet("{id}", Name = "GetUserById")]
-        [Authorize]
+        [AllowAnonymous]
+        //[Authorize]
         [Produces("application/json")]
         [ProducesResponseType(typeof(UserUIDetailsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -95,7 +94,7 @@ namespace ContactHubApi.Controllers
                 var user = await _userService.GetUserById(id);
 
                 if (user == null)
-                    return NotFound($"User with id {id} does not exist");
+                    return NotFound($"User with ID {id} is not found");
 
                 return Ok(user);
             }
@@ -131,7 +130,8 @@ namespace ContactHubApi.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [AllowAnonymous]
+        //[Authorize]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(UserUIDetailsDto), StatusCodes.Status200OK)]
@@ -146,7 +146,7 @@ namespace ContactHubApi.Controllers
                 var user = await _userService.GetUserById(id);
 
                 if (user == null)
-                    return NotFound($"User with Id = {id} is not found");
+                    return NotFound($"User with ID {id} is not found");
 
                 var isUsernameExist = await _userService.IsUsernameExist(request.Username!);
 
