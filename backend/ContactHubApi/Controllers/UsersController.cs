@@ -18,6 +18,26 @@ namespace ContactHubApi.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Log in to ContactHub
+        /// </summary>
+        /// <param name="request">The user to login</param>
+        /// <returns>User details</returns>
+        /// <remarks>
+        /// Sample Request:
+        ///     
+        ///     POST /api/users/login
+        ///     {
+        ///         "username": "jhondoe",
+        ///         "password": "jhondoe123"
+        ///     }
+        ///    
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully logged in an account</response>
+        /// <response code="400">Details are invalid</response>
+        /// <response code="404">Username is not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpPost("login")]
         [AllowAnonymous]
         [Consumes("application/json")]
