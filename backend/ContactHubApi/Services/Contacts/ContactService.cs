@@ -38,7 +38,10 @@ namespace ContactHubApi.Services.Contacts
         public async Task<ContactAddressDto?> GetContactById(Guid id)
         {
             var contactModel = await _contactRepository.GetContactById(id);
-            if (contactModel == null) return null;
+            if (contactModel == null)
+            {
+                return null;
+            }
 
             return _mapper.Map<ContactAddressDto>(contactModel);
         }
