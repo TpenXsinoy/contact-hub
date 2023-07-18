@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ContactHubApi.Dtos.Contacts;
-using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
 using ContactHubApi.Repositories.Contacts;
 
@@ -50,7 +49,7 @@ namespace ContactHubApi.Services.Contacts
             contactModel.Id = id;
 
             await _contactRepository.UpdateContact(contactModel);
-            
+
             var contactDto = _mapper.Map<ContactDto>(contactModel);
 
             return contactDto;
