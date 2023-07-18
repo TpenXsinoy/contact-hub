@@ -43,7 +43,10 @@ namespace ContactHubApi.Services.Users
         public async Task<UserUIDetailsDto?> GetUserById(Guid id)
         {
             var userModel = await _userRepository.GetUserById(id);
-            if (userModel == null) return null;
+            if (userModel == null)
+            {
+                return null;
+            }
 
             return _mapper.Map<UserUIDetailsDto>(userModel);
         }
@@ -51,7 +54,10 @@ namespace ContactHubApi.Services.Users
         public async Task<UserUIDetailsDto?> GetUserByUsername(string username)
         {
             var userModel = await _userRepository.GetUserByUsername(username);
-            if (userModel == null) return null;
+            if (userModel == null)
+            {
+                return null;
+            }
 
             return _mapper.Map<UserUIDetailsDto>(userModel);
         }
@@ -59,7 +65,10 @@ namespace ContactHubApi.Services.Users
         public async Task<UserTokenDto?> GetUserByUsernameWithToken(string username)
         {
             var userModel = await _userRepository.GetUserByUsername(username);
-            if (userModel == null) return null;
+            if (userModel == null)
+            {
+                return null;
+            }
 
             return _mapper.Map<UserTokenDto>(userModel);
         }
