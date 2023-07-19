@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContactHubApi.Controllers
 {
     [Route("api/addresses")]
+    [Authorize]
     [ApiController]
     public class AddressesController : ControllerBase
     {
@@ -52,7 +53,6 @@ namespace ContactHubApi.Controllers
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(typeof(Address), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
@@ -105,7 +105,6 @@ namespace ContactHubApi.Controllers
         /// <response code="500">Internal server error</response>
         [HttpGet("{id}", Name = "GetAddressById")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(typeof(AddressDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -158,7 +157,6 @@ namespace ContactHubApi.Controllers
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(typeof(AddressDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
@@ -210,7 +208,6 @@ namespace ContactHubApi.Controllers
         /// <response code="500">Internal server error</response>
         [HttpDelete("{id}")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

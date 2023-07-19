@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace ContactHubApi.Controllers
 {
     [Route("api/contacts")]
+    [Authorize]
     [ApiController]
     public class ContactsController : ControllerBase
     {
@@ -50,7 +51,6 @@ namespace ContactHubApi.Controllers
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(typeof(Contact), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
@@ -108,7 +108,6 @@ namespace ContactHubApi.Controllers
         /// <response code="500">Internal server error</response>
         [HttpGet(Name = "GetAllContacts")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(typeof(ContactDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
@@ -174,7 +173,6 @@ namespace ContactHubApi.Controllers
         /// <response code="500">Internal server error</response>
         [HttpGet("{id}", Name = "GetContactById")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(typeof(ContactAddressDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -224,7 +222,6 @@ namespace ContactHubApi.Controllers
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(typeof(ContactDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
@@ -276,7 +273,6 @@ namespace ContactHubApi.Controllers
         /// <response code="500">Internal server error</response>
         [HttpDelete("{id}")]
         [Produces("application/json")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
