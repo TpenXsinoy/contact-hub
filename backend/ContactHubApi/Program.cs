@@ -112,7 +112,7 @@ void ConfigureServices(IServiceCollection services)
     services.AddScoped<IContactRepository, ContactRepository>();
     services.AddScoped<IAddressRepository, AddressRepository>();
 
-    // Add authentication
+    // Add Authentication
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
