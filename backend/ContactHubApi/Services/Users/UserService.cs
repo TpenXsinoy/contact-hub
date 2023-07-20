@@ -17,18 +17,11 @@ namespace ContactHubApi.Services.Users
             _mapper = mapper;
         }
 
-        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using var hmac = new HMACSHA512();
-            passwordSalt = hmac.Key;
-            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-        }
-
         public async Task<UserDto> CreateUser(UserCreationDto user)
         {
-            var userModel = _mapper.Map<User>(user);
-
             CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            var userModel = _mapper.Map<User>(user);
 
             userModel.PasswordHash = passwordHash;
             userModel.PasswordSalt = passwordSalt;
@@ -85,9 +78,9 @@ namespace ContactHubApi.Services.Users
 
         public async Task<UserUIDetailsDto> UpdateUser(Guid id, UserCreationDto user)
         {
-            var userModel = _mapper.Map<User>(user);
-
             CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            var userModel = _mapper.Map<User>(user);
 
             userModel.Id = id;
             userModel.PasswordHash = passwordHash;
@@ -98,6 +91,13 @@ namespace ContactHubApi.Services.Users
             var userDto = _mapper.Map<UserUIDetailsDto>(userModel);
 
             return userDto;
+        }
+
+        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using var hmac = new HMACSHA512();
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
         public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
