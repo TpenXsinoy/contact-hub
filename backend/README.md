@@ -4,16 +4,16 @@
 
 # User Endpoints
 
-![Alt text](image.png)
+![Alt text](Static/UserEndpoints.PNG)
 
 # Token Endpoints
 
-![Alt text](TokenEndpoints.PNG)
+![Alt text](Static/TokenEndpoints.PNG)
 
 # Contact Endpoints
 
-![Alt text](ContactEndpoints.PNG)
+![Alt text](Static/ContactEndpoints.PNG)
 
 # Address Endpoints
 
-![Alt text](AddressEndpoints.PNG)
+![Alt text](Static/AddressEndpoints.PNG)
