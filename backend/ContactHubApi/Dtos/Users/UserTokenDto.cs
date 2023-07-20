@@ -5,7 +5,7 @@ namespace ContactHubApi.Dtos.Users
 {
     public class UserTokenDto
     {
-        [Required(ErrorMessage = "Email is required.")]
+        [Required(ErrorMessage = "Email is required."), EmailAddress(ErrorMessage = "Email is invalid.")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Username is required.")]
