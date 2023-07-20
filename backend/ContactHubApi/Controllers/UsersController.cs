@@ -99,7 +99,7 @@ namespace ContactHubApi.Controllers
         [ProducesResponseType(typeof(UserDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateUser([FromBody] UserCreationDto request)
+        public async Task<IActionResult> RegisterUser([FromBody] UserCreationDto request)
         {
             try
             {

@@ -52,6 +52,7 @@ namespace ContactHubApi.Controllers
         [AllowAnonymous]
         [Consumes("application/json")]
         [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> AcquireToken([FromBody] UserLoginDto request)
@@ -102,23 +103,22 @@ namespace ContactHubApi.Controllers
         /// 
         /// <response code="200">Successfully acquired an access token</response>
         /// <response code="400">Details are invalid</response>
-        /// <response code="404">User is not found</response>
-        /// <response code="500">Internal server error</response>
+        /// <response code="401">User is not authorized</response>
         [HttpPost("renew")]
         [AllowAnonymous]
         [Produces("application/json")]
         [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult RenewToken([FromBody] RenewTokenDto request)
         {
             string tokenStatus = _tokenService.Verify(request.RefreshToken, _user!);
 
-            if (tokenStatus == "Invalid")
+            if (tokenStatus.Equals("Invalid"))
             {
                 return Unauthorized("Invalid refresh token");
             }
-            else if (tokenStatus == "Expired")
+            else if (tokenStatus.Equals("Expired"))
             {
                 return Unauthorized("Refresh token expired");
             }
