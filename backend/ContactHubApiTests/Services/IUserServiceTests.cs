@@ -1,9 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
 using ContactHubApi.Repositories.Users;
 using ContactHubApi.Services.Users;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 using Moq;
 
 namespace ContactHubApiTests.Services
@@ -189,7 +190,7 @@ namespace ContactHubApiTests.Services
         {
             // Arrange
             var userId = It.IsAny<Guid>();
-           
+
             _fakeUserRepository.Setup(repo => repo.GetUserById(userId))
                                 .Throws(new Exception("Database connection error"));
 
@@ -621,6 +622,48 @@ namespace ContactHubApiTests.Services
 
             // Assert
             Assert.False(result);
+        }
+
+        // GetCurrentUser Tests
+        [Fact]
+        public void GetCurrentUser_WithValidIdentity_ReturnsUserTokenDto()
+        {
+            // Arrange
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.GivenName, "John"),
+                new Claim(ClaimTypes.Surname, "Doe"),
+                new Claim(ClaimTypes.NameIdentifier, "john.doe"),
+                new Claim(ClaimTypes.Email, "john.doe@example.com"),
+            };
+
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var httpContext = new DefaultHttpContext
+            {
+                User = claimsPrincipal
+            };
+
+            // Act
+            var result = _userService.GetCurrentUser(httpContext);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("John", result.FirstName);
+            Assert.Equal("Doe", result.LastName);
+            Assert.Equal("john.doe", result.Username);
+            Assert.Equal("john.doe@example.com", result.Email);
+        }
+
+        [Fact]
+        public void GetCurrentUser_WithNullIdentity_ReturnsNull()
+        {
+            // Arrange
+            // Act
+            var result = _userService.GetCurrentUser(null);
+
+            // Assert
+            Assert.Null(result);
         }
     }
 }
