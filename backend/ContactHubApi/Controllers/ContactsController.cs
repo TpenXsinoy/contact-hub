@@ -13,18 +13,22 @@ namespace ContactHubApi.Controllers
     [ApiController]
     public class ContactsController : ControllerBase
     {
+
         private readonly ILogger<ContactsController> _logger;
         private readonly IContactService _contactService;
         private readonly IUserService _userService;
+        private readonly HttpContext _context;
 
         public ContactsController(
             IContactService contactService,
             ILogger<ContactsController> logger,
-            IUserService userService)
+            IUserService userService,
+            HttpContext context)
         {
             _logger = logger;
             _contactService = contactService;
             _userService = userService;
+            _context = context;
         }
 
         /// <summary>
@@ -81,12 +85,11 @@ namespace ContactHubApi.Controllers
         /// <summary>
         /// Gets all contacts of a user
         /// </summary>
-        /// <param name="userId">Id of User</param>
         /// <returns>Returns the ContactDto details of a user</returns>
         /// <remarks>
         /// Sample request:
         /// 
-        ///     GET /api/contacts?userId=3fa85f64-5717-4562-b3fc-2c963f66afa6
+        ///     GET /api/contacts
         ///     [
         ///         {
         ///             "id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -113,18 +116,25 @@ namespace ContactHubApi.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllContacts([FromQuery] Guid userId)
+        public async Task<IActionResult> GetAllContacts()
         {
             try
             {
-                var user = await _userService.GetUserById(userId);
+                var loggedInUser = _userService.GetCurrentUser(_context);
+
+                if (loggedInUser == null)
+                {
+                    return Unauthorized();
+                }
+
+                var user = await _userService.GetUserByUsername(loggedInUser.Username);
 
                 if (user == null)
                 {
-                    return NotFound($"User with ID {userId} is not found");
+                    return NotFound($"User is not found");
                 }
 
-                var contacts = await _contactService.GetAllContacts(userId);
+                var contacts = await _contactService.GetAllContacts(user.Id);
 
                 if (contacts.IsNullOrEmpty())
                 {
