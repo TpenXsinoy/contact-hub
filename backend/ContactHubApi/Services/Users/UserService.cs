@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Security.Claims;
+using System.Security.Cryptography;
 using AutoMapper;
 using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
@@ -105,6 +106,23 @@ namespace ContactHubApi.Services.Users
             using var hmac = new HMACSHA512(passwordSalt);
             var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             return computedHash.SequenceEqual(passwordHash);
+        }
+
+        public UserTokenDto? GetCurrentUser(HttpContext identity)
+        {
+            if (identity != null && identity.User.Identity is ClaimsIdentity claimsIdentity)
+            {
+                var userClaims = claimsIdentity.Claims;
+
+                return new UserTokenDto
+                {
+                    FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,
+                    LastName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value,
+                    Username = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
+                    Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+                };
+            }
+            return null;
         }
     }
 }

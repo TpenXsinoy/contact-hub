@@ -71,5 +71,13 @@ namespace ContactHubApi.Services.Users
         /// <param name="passwordSalt">Salt password of a user</param>
         /// <returns>True if passwords are the same, otherwise false</returns>
         bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
+
+
+        /// <summary>
+        /// Gets the current user that is logged in
+        /// </summary>
+        /// <param name="identity">HttpContextIdentity</param>
+        /// <returns>Returns the current user that is logged in</returns>
+        public UserTokenDto? GetCurrentUser(HttpContext identity);
     }
 }
