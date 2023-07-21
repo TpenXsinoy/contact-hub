@@ -85,7 +85,7 @@ namespace ContactHubApi.Controllers
         ///         "lastName" : "Doe",
         ///         "email" : "john.doe@gmail.com",
         ///         "username" : "john123",
-        ///         "password" : "john111"
+        ///         "password" : "John123!"
         ///     }
         /// 
         /// </remarks>
