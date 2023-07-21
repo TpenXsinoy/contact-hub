@@ -4,6 +4,7 @@ using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
 using ContactHubApi.Services.Contacts;
 using ContactHubApi.Services.Users;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -16,16 +17,19 @@ namespace ContactHubApiTests.Controllers
         private readonly Mock<IContactService> _fakeContactService;
         private readonly Mock<ILogger<ContactsController>> _fakeLogger;
         private readonly Mock<IUserService> _fakeUserService;
+        private readonly Mock<HttpContext> _fakeContext;
 
         public ContactsControllerTests()
         {
             _fakeContactService = new Mock<IContactService>();
             _fakeLogger = new Mock<ILogger<ContactsController>>();
             _fakeUserService = new Mock<IUserService>();
+            _fakeContext = new Mock<HttpContext>();
             _controller = new ContactsController(
                 _fakeContactService.Object,
                 _fakeLogger.Object,
-                _fakeUserService.Object);
+                _fakeUserService.Object,
+                _fakeContext.Object);
         }
 
         // CreateContact Tests
@@ -129,15 +133,24 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
+            var username = It.IsAny<string>();
 
-            _fakeUserService.Setup(service => service.GetUserById(userId))
+            _fakeContext.SetupGet(x => x.User.Identity.Name).Returns(username);
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+                            .Returns(new UserTokenDto()
+                            {
+                                Username = username
+                            });
+
+            _fakeUserService.Setup(service => service.GetUserByUsername(username))
                             .ReturnsAsync(new UserUIDetailsDto());
 
             _fakeContactService.Setup(service => service.GetAllContacts(userId))
                                 .ReturnsAsync(new List<ContactDto>() { new ContactDto() });
 
             // Act
-            var result = await _controller.GetAllContacts(userId);
+            var result = await _controller.GetAllContacts();
 
             //Assert
             var okObjectResult = Assert.IsType<OkObjectResult>(result);
@@ -145,19 +158,44 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
+        public async Task GetAllContacts_UserNotAuthenticated_ReturnsUnauthorized()
+        {
+            //Arrange
+            var userId = It.IsAny<Guid>();
+            var username = It.IsAny<string>();
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+                            .Returns((UserTokenDto?)null);
+
+            // Act
+            var result = await _controller.GetAllContacts();
+
+            //Assert
+            var unauthorizedResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedResult.StatusCode);
+        }
+
+        [Fact]
         public async Task GetAllContacts_HasNoContacts_ReturnsNoContent()
         {
             //Arrange
             var userId = It.IsAny<Guid>();
+            var username = It.IsAny<string>();
 
-            _fakeUserService.Setup(service => service.GetUserById(userId))
+            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+                            .Returns(new UserTokenDto()
+                            {
+                                Username = username
+                            });
+
+            _fakeUserService.Setup(service => service.GetUserByUsername(username))
                             .ReturnsAsync(new UserUIDetailsDto());
 
             _fakeContactService.Setup(service => service.GetAllContacts(userId))
                                 .ReturnsAsync(new List<ContactDto>());
 
             // Act
-            var result = await _controller.GetAllContacts(userId);
+            var result = await _controller.GetAllContacts();
 
             //Assert
             var noContentResult = Assert.IsType<NoContentResult>(result);
@@ -169,12 +207,19 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
+            var username = It.IsAny<string>();
 
-            _fakeUserService.Setup(service => service.GetUserById(userId))
+            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+                            .Returns(new UserTokenDto()
+                            {
+                                Username = username
+                            });
+
+            _fakeUserService.Setup(service => service.GetUserByUsername(username))
                             .ReturnsAsync((UserUIDetailsDto?)null);
 
             // Act
-            var result = await _controller.GetAllContacts(userId);
+            var result = await _controller.GetAllContacts();
 
             //Assert
             var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(result);
@@ -182,16 +227,23 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task GetAllContacts_GetUserByIdServerError_ReturnsInternalServerError()
+        public async Task GetAllContacts_GetUserByUsernameServerError_ReturnsInternalServerError()
         {
             //Arrange
             var userId = It.IsAny<Guid>();
+            var username = It.IsAny<string>();
 
-            _fakeUserService.Setup(service => service.GetUserById(userId))
+            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+                            .Returns(new UserTokenDto()
+                            {
+                                Username = username
+                            });
+
+            _fakeUserService.Setup(service => service.GetUserByUsername(username))
                             .ThrowsAsync(new Exception());
 
             // Act
-            var result = await _controller.GetAllContacts(userId);
+            var result = await _controller.GetAllContacts();
 
             //Assert
             var serverError = Assert.IsType<ObjectResult>(result);
@@ -203,15 +255,22 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
+            var username = It.IsAny<string>();
 
-            _fakeUserService.Setup(service => service.GetUserById(userId))
+            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+                            .Returns(new UserTokenDto()
+                            {
+                                Username = username
+                            });
+
+            _fakeUserService.Setup(service => service.GetUserByUsername(username))
                            .ReturnsAsync(new UserUIDetailsDto());
 
             _fakeContactService.Setup(service => service.GetAllContacts(userId))
                                 .ThrowsAsync(new Exception());
 
             // Act
-            var result = await _controller.GetAllContacts(userId);
+            var result = await _controller.GetAllContacts();
 
             //Assert
             var serverError = Assert.IsType<ObjectResult>(result);
