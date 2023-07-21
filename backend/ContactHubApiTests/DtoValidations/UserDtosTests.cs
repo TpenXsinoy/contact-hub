@@ -16,7 +16,7 @@ namespace ContactHubApiTests.Dtos
                 LastName = "Doe",
                 Email = "john.doe@example.com",
                 Username = "johndoe123",
-                Password = "password123"
+                Password = "Password123!"
             };
 
             var validationContext = new ValidationContext(userCreationDto, null, null);
@@ -40,6 +40,7 @@ namespace ContactHubApiTests.Dtos
         [InlineData("John", "TooLongLastNameTooLongLastNameTooLongLastNameTooLongLastName", "john.doe@example.com", "johndoe123", "password123", "Maximum lenghth for the last name is 50 characters.")]
         [InlineData("John", "Doe", "john.doe@example.com", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "password123", "Maximum lenghth for the username is 50 characters.")]
         [InlineData("John", "Doe", "john.doe@example.com", "johndoe123", "password123TooLongPasswordTooLongPasswordTooLongpassword123TooLongPasswordTooLongPasswordTooLong", "Maximum lenghth for the password is 50 characters.")]
+        [InlineData("John", "Doe", "john.doe@example.com", "johndoe123", "weak", "The password field must have at least 8 characters, at least 1 numeric, at least 1 lowercase, at least 1 uppercase, and at least 1 special character.")]
         public void InvalidUserCreationDto_ValidationErrors(string firstName, string lastName, string email,
                                                             string username, string password, string expectedErrorMessage)
         {
@@ -116,6 +117,8 @@ namespace ContactHubApiTests.Dtos
             // Arrange
             var userTokenDto = new UserTokenDto
             {
+                FirstName = "John",
+                LastName = "Doe",
                 Email = "john.doe@example.com",
                 Username = "johndoe123",
                 RefreshToken = "refreshToken",
@@ -135,22 +138,26 @@ namespace ContactHubApiTests.Dtos
         }
 
         [Theory]
-        [InlineData("", "john_doe", "refreshToken123", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "Email is required.")]
-        [InlineData("johndoeexmaple.com", "john_doe", "refreshToken123", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "Email is invalid.")]
-        [InlineData("john.doe@example.com", "", "refreshToken123", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "Username is required.")]
-        [InlineData("john.doe@example.com", "john_doe", "", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "RefreshToken is required.")]
-        public void InvalidUserTokenDto_ValidationErrors(string email, string username, string refreshToken, 
+        [InlineData("", "test", "john.doe@example.com", "john_doe", "refreshToken123", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "First Name is required.")]
+        [InlineData("test", "", "john.doe@example.com", "john_doe", "refreshToken123", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "Last Name is required.")]
+        [InlineData("test", "test", "", "john_doe", "refreshToken123", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "Email is required.")]
+        [InlineData("test", "test", "johndoeexmaple.com", "john_doe", "refreshToken123", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "Email is invalid.")]
+        [InlineData("test", "test", "john.doe@example.com", "", "refreshToken123", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "Username is required.")]
+        [InlineData("test", "test", "john.doe@example.com", "john_doe", "", "2023-07-20T12:00:00", "2023-07-21T12:00:00", "RefreshToken is required.")]
+        public void InvalidUserTokenDto_ValidationErrors(string firstName, string lastName, string email, string username, string refreshToken,
                                                         string tokenCreated, string tokenExpires, string expectedErrorMessage)
         {
             // Arrange
             var userTokenDto = new UserTokenDto
             {
+                FirstName = firstName,
+                LastName = lastName,
                 Email = email,
                 Username = username,
                 RefreshToken = refreshToken,
                 TokenCreated = DateTime.Parse(tokenCreated),
                 TokenExpires = DateTime.Parse(tokenExpires)
-           
+
             };
 
             var validationContext = new ValidationContext(userTokenDto, null, null);
