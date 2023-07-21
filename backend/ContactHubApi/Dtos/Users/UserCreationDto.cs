@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ContactHubApi.Utils;
 
 namespace ContactHubApi.Dtos.Users
 {
@@ -22,6 +23,7 @@ namespace ContactHubApi.Dtos.Users
 
         [Required(ErrorMessage = "Password is required.")]
         [MaxLength(50, ErrorMessage = "Maximum lenghth for the password is 50 characters.")]
+        [StrongPassword(ErrorMessage = "The password field must have at least 8 characters, at least 1 numeric, at least 1 lowercase, at least 1 uppercase, and at least 1 special character.")]
         public string Password { get; set; } = string.Empty;
     }
 }
