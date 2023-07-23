@@ -1,0 +1,24 @@
+@import "src/styles/variables";
+
+.Card {
+  background-color: $neutral-0;
+  border-radius: 4px;
+  box-shadow: $shadow-normal;
+  position: relative;
+  text-decoration: none;
+
+  &___clickable {
+    transition: background-color 0.3s;
+    border-color: $neutral-900;
+    border-radius: 16px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: $shadow-raised;
+    }
+
+    &:active {
+      border-color: $violet-400;
+    }
+  }
+}
