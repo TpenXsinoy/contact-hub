@@ -1,0 +1,56 @@
+@import "src/styles/mixins";
+
+.ChangePassword {
+  &_title {
+    margin-bottom: 40px;
+  }
+
+  &_input {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  &_buttonGroup {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    width: 100%;
+
+    @include breakpoint(xs) {
+      flex-direction: column;
+      row-gap: 20px;
+    }
+
+    &_switchButton {
+      max-width: 265px;
+
+      @include breakpoint(xs) {
+        width: 100%;
+      }
+    }
+
+    &_updateButton {
+      margin-left: auto;
+      max-width: 265px;
+
+      @include breakpoint(xs) {
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+
+    &_buttonText {
+      @include flex-center;
+    }
+
+    &_spinner {
+      margin-left: 12px;
+      width: auto;
+    }
+  }
+
+  &_withMarginTop {
+    margin-top: 20px;
+  }
+}

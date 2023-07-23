@@ -1,0 +1,28 @@
+@import "src/styles/mixins";
+
+.Settings {
+  display: grid;
+  grid-template-columns: 210px auto;
+  grid-gap: 24px 96px;
+
+  @include breakpoint(md) {
+    grid-gap: 24px 64px;
+  }
+
+  @include breakpoint(sm) {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+  }
+
+  &_title {
+    margin: 0 0 32px 0;
+  }
+
+  &_card {
+    padding: 48px;
+
+    @include breakpoint(sm) {
+      padding: 32px;
+    }
+  }
+}
