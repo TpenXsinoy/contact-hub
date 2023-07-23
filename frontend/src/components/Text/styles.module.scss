@@ -1,0 +1,262 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+.Text {
+  &___heading {
+    &___xxl {
+      @include heading(4rem, 1.125);
+
+      @include breakpoint(sm) {
+        font-size: 3.5rem;
+      }
+    }
+
+    &___xl {
+      @include heading(3.5rem, 1.142);
+
+      @include breakpoint(sm) {
+        font-size: 3rem;
+      }
+    }
+
+    &___lg {
+      @include heading(3rem, 1.167);
+
+      @include breakpoint(sm) {
+        font-size: 2.5rem;
+      }
+    }
+
+    &___md {
+      @include heading(2.5rem, 1.1);
+
+      @include breakpoint(sm) {
+        font-size: 2rem;
+      }
+    }
+
+    &___sm {
+      @include heading(2rem, 1.125);
+
+      @include breakpoint(sm) {
+        font-size: 1.5rem;
+      }
+    }
+
+    &___xs {
+      @include heading(1.5rem, 1.167);
+
+      @include breakpoint(sm) {
+        font-size: 1.25rem;
+      }
+    }
+
+    &___xxs {
+      @include heading(1.25rem, 1.2);
+
+      @include breakpoint(sm) {
+        font-size: 1rem;
+      }
+    }
+
+    &___xxxs {
+      @include heading(1rem, 1.25);
+
+      @include breakpoint(sm) {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  &___body {
+    &___lg {
+      @include body(1.125rem, 2);
+
+      @include breakpoint(sm) {
+        font-size: 1rem;
+      }
+    }
+
+    &___md {
+      @include body(1rem, 1.5);
+
+      @include breakpoint(sm) {
+        font-size: 0.875rem;
+      }
+    }
+
+    &___sm {
+      @include body(0.875rem, 1.5);
+
+      @include breakpoint(sm) {
+        font-size: 0.75rem;
+      }
+    }
+
+    &___xs {
+      @include body(0.75rem, 1.5);
+
+      @include breakpoint(sm) {
+        font-size: 0.625rem;
+      }
+    }
+  }
+
+  &___span {
+    &___lg {
+      @include span(1.125rem, 2);
+
+      @include breakpoint(sm) {
+        font-size: 1rem;
+      }
+    }
+
+    &___md {
+      @include span(1rem, 1.5);
+
+      @include breakpoint(sm) {
+        font-size: 0.875rem;
+      }
+    }
+
+    &___sm {
+      @include span(0.875rem, 1.5);
+
+      @include breakpoint(sm) {
+        font-size: 0.75rem;
+      }
+    }
+
+    &___xs {
+      @include span(0.75rem, 1.5);
+
+      @include breakpoint(sm) {
+        font-size: 0.625rem;
+      }
+    }
+  }
+
+  &___n___900 {
+    color: $neutral-900;
+  }
+
+  &___n___800 {
+    color: $neutral-800;
+  }
+
+  &___n___700 {
+    color: $neutral-700;
+  }
+
+  &___n___600 {
+    color: $neutral-600;
+  }
+
+  &___n___500 {
+    color: $neutral-500;
+  }
+
+  &___n___400 {
+    color: $neutral-400;
+  }
+
+  &___n___300 {
+    color: $neutral-300;
+  }
+
+  &___n___200 {
+    color: $neutral-200;
+  }
+
+  &___n___100 {
+    color: $neutral-100;
+  }
+
+  &___n___50 {
+    color: $neutral-50;
+  }
+
+  &___n___0 {
+    color: $neutral-0;
+  }
+
+  &___v___400 {
+    color: $violet-400;
+  }
+
+  &___v___300 {
+    color: $violet-300;
+  }
+
+  &___v___200 {
+    color: $violet-200;
+  }
+
+  &___v___100 {
+    color: $violet-100;
+  }
+
+  &___b___400 {
+    color: $blue-400;
+  }
+
+  &___b___300 {
+    color: $blue-300;
+  }
+
+  &___b___200 {
+    color: $blue-200;
+  }
+
+  &___b___100 {
+    color: $blue-100;
+  }
+
+  &___r___400 {
+    color: $red-400;
+  }
+
+  &___r___300 {
+    color: $red-300;
+  }
+
+  &___r___200 {
+    color: $red-200;
+  }
+
+  &___r___100 {
+    color: $red-100;
+  }
+
+  &___g___400 {
+    color: $green-400;
+  }
+
+  &___g___300 {
+    color: $green-300;
+  }
+
+  &___g___200 {
+    color: $green-200;
+  }
+
+  &___g___100 {
+    color: $green-100;
+  }
+
+  &___y___400 {
+    color: $yellow-400;
+  }
+
+  &___y___300 {
+    color: $yellow-300;
+  }
+
+  &___y___200 {
+    color: $yellow-200;
+  }
+
+  &___y___100 {
+    color: $yellow-100;
+  }
+}
