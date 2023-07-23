@@ -1,0 +1,21 @@
+@import "src/styles/variables";
+
+.Sidebar {
+  background: $neutral-0;
+  border-right: 1px solid $neutral-100;
+  box-shadow: $shadow-normal;
+  height: calc(100% - 65px);
+  left: 0;
+  overflow-y: auto;
+  position: fixed;
+  top: 65px;
+  transition: transform 0.25s, opacity 0.25s, top 0.35s, height 0.35s,
+    -webkit-transform 0.25s, -moz-transform 0.25s, -o-transform 0.25s;
+  transform: translate3d(0, 0, 0);
+  width: 150px;
+  z-index: 1000;
+
+  &___toggled {
+    transform: translate3d(-150px, 0, 0);
+  }
+}
