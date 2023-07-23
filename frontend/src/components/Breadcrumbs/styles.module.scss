@@ -1,0 +1,28 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+.Breadcrumbs {
+  &_links {
+    display: flex;
+    margin-top: 8px;
+
+    @include breakpoint(xs) {
+      max-width: 300px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    &_keyWrapper {
+      display: contents;
+    }
+
+    &_link {
+      color: $blue-400;
+      text-decoration: none;
+    }
+
+    &_linkSeparator {
+      margin: 0 10px !important;
+    }
+  }
+}
