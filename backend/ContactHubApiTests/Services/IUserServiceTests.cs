@@ -629,29 +629,22 @@ namespace ContactHubApiTests.Services
         public void GetCurrentUser_WithValidIdentity_ReturnsUserTokenDto()
         {
             // Arrange
-            var claims = new List<Claim>
+            var identity = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.GivenName, "John"),
                 new Claim(ClaimTypes.Surname, "Doe"),
-                new Claim(ClaimTypes.NameIdentifier, "john.doe"),
-                new Claim(ClaimTypes.Email, "john.doe@example.com"),
-            };
-
-            var identity = new ClaimsIdentity(claims);
-            var claimsPrincipal = new ClaimsPrincipal(identity);
-            var httpContext = new DefaultHttpContext
-            {
-                User = claimsPrincipal
-            };
+                new Claim(ClaimTypes.NameIdentifier, "johndoe123"),
+                new Claim(ClaimTypes.Email, "john.doe@example.com")
+            });
 
             // Act
-            var result = _userService.GetCurrentUser(httpContext);
+            var result = _userService.GetCurrentUser(identity);
 
             // Assert
             Assert.NotNull(result);
             Assert.Equal("John", result.FirstName);
             Assert.Equal("Doe", result.LastName);
-            Assert.Equal("john.doe", result.Username);
+            Assert.Equal("johndoe123", result.Username);
             Assert.Equal("john.doe@example.com", result.Email);
         }
 
@@ -659,8 +652,10 @@ namespace ContactHubApiTests.Services
         public void GetCurrentUser_WithNullIdentity_ReturnsNull()
         {
             // Arrange
+            ClaimsIdentity? identity = null;
+
             // Act
-            var result = _userService.GetCurrentUser(null);
+            var result = _userService.GetCurrentUser(identity);
 
             // Assert
             Assert.Null(result);
