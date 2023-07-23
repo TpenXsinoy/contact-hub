@@ -1,4 +1,5 @@
-﻿using ContactHubApi.Controllers;
+﻿using System.Security.Claims;
+using ContactHubApi.Controllers;
 using ContactHubApi.Dtos.Contacts;
 using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
@@ -28,8 +29,7 @@ namespace ContactHubApiTests.Controllers
             _controller = new ContactsController(
                 _fakeContactService.Object,
                 _fakeLogger.Object,
-                _fakeUserService.Object,
-                _fakeContext.Object);
+                _fakeUserService.Object);
         }
 
         // CreateContact Tests
@@ -133,11 +133,21 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-            var username = It.IsAny<string>();
+            var username = "john.doe";
 
-            _fakeContext.SetupGet(x => x.User.Identity.Name).Returns(username);
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.Name, username)
+             }));
 
-            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
                             .Returns(new UserTokenDto()
                             {
                                 Username = username
@@ -154,6 +164,8 @@ namespace ContactHubApiTests.Controllers
 
             //Assert
             var okObjectResult = Assert.IsType<OkObjectResult>(result);
+            var contacts = Assert.IsAssignableFrom<IEnumerable<ContactDto>>(okObjectResult.Value);
+            Assert.Single(contacts);
             Assert.Equal(200, okObjectResult.StatusCode);
         }
 
@@ -162,9 +174,22 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-            var username = It.IsAny<string>();
+             var username = "john.doe";
 
-            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+              {
+                new Claim(ClaimTypes.Name, username)
+              }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
                             .Returns((UserTokenDto?)null);
 
             // Act
@@ -180,9 +205,21 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-            var username = It.IsAny<string>();
+             var username = "john.doe";
 
-            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+              {
+                new Claim(ClaimTypes.Name, username)
+              }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
                             .Returns(new UserTokenDto()
                             {
                                 Username = username
@@ -207,9 +244,21 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-            var username = It.IsAny<string>();
+             var username = "john.doe";
 
-            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+              {
+                new Claim(ClaimTypes.Name, username)
+              }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
                             .Returns(new UserTokenDto()
                             {
                                 Username = username
@@ -231,9 +280,21 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-            var username = It.IsAny<string>();
+             var username = "john.doe";
 
-            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.Name, username)
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
                             .Returns(new UserTokenDto()
                             {
                                 Username = username
@@ -255,9 +316,21 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-            var username = It.IsAny<string>();
+             var username = "john.doe";
 
-            _fakeUserService.Setup(service => service.GetCurrentUser(_fakeContext.Object))
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+              {
+                new Claim(ClaimTypes.Name, username)
+              }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
                             .Returns(new UserTokenDto()
                             {
                                 Username = username
