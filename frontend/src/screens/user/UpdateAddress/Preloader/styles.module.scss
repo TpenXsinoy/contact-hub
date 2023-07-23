@@ -1,0 +1,14 @@
+@import "src/styles/mixins";
+
+.Preloader {
+  @include ease(0.4s);
+  height: 520px;
+  margin-top: 20px;
+  max-width: 450px;
+  overflow: hidden;
+
+  &_shine {
+    background-size: 800px 520px;
+    height: 520px;
+  }
+}
