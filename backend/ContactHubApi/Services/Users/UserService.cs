@@ -108,12 +108,12 @@ namespace ContactHubApi.Services.Users
             return computedHash.SequenceEqual(passwordHash);
         }
 
-        public UserTokenDto? GetCurrentUser(HttpContext identity)
+        public UserTokenDto? GetCurrentUser(ClaimsIdentity? identity)
         {
-            if (identity != null && identity.User.Identity is ClaimsIdentity claimsIdentity)
+            if (identity != null)
             {
-                var userClaims = claimsIdentity.Claims;
-
+                var userClaims = identity.Claims;
+            
                 return new UserTokenDto
                 {
                     FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,

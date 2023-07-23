@@ -1,4 +1,5 @@
-﻿using ContactHubApi.Dtos.Users;
+﻿using System.Security.Claims;
+using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
 
 namespace ContactHubApi.Services.Users
@@ -78,6 +79,6 @@ namespace ContactHubApi.Services.Users
         /// </summary>
         /// <param name="identity">HttpContextIdentity</param>
         /// <returns>Returns the current user that is logged in</returns>
-        public UserTokenDto? GetCurrentUser(HttpContext identity);
+        public UserTokenDto? GetCurrentUser(ClaimsIdentity? identity);
     }
 }
