@@ -296,5 +296,5 @@ namespace ContactHubApi.Controllers
                 return StatusCode(500, "Something went wrong");
             }
         }
-    }
+    } 
 }

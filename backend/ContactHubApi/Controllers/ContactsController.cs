@@ -1,4 +1,5 @@
-﻿using ContactHubApi.Dtos.Contacts;
+﻿using System.Security.Claims;
+using ContactHubApi.Dtos.Contacts;
 using ContactHubApi.Models;
 using ContactHubApi.Services.Contacts;
 using ContactHubApi.Services.Users;
@@ -17,18 +18,15 @@ namespace ContactHubApi.Controllers
         private readonly ILogger<ContactsController> _logger;
         private readonly IContactService _contactService;
         private readonly IUserService _userService;
-        private readonly HttpContext _context;
 
         public ContactsController(
             IContactService contactService,
             ILogger<ContactsController> logger,
-            IUserService userService,
-            HttpContext context)
+            IUserService userService)
         {
             _logger = logger;
             _contactService = contactService;
             _userService = userService;
-            _context = context;
         }
 
         /// <summary>
@@ -120,7 +118,9 @@ namespace ContactHubApi.Controllers
         {
             try
             {
-                var loggedInUser = _userService.GetCurrentUser(_context);
+                ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
+
+                var loggedInUser = _userService.GetCurrentUser(identity);
 
                 if (loggedInUser == null)
                 {
@@ -308,5 +308,7 @@ namespace ContactHubApi.Controllers
                 return StatusCode(500, "Something went wrong");
             }
         }
+
+
     }
 }
