@@ -116,10 +116,10 @@ namespace ContactHubApi.Services.Users
             
                 return new UserTokenDto
                 {
-                    FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,
-                    LastName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value,
-                    Username = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
-                    Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+                    FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)!.Value,
+                    LastName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)!.Value,
+                    Username = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)!.Value,
+                    Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)!.Value,
                 };
             }
             return null;

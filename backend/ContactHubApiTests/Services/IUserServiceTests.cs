@@ -4,7 +4,6 @@ using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
 using ContactHubApi.Repositories.Users;
 using ContactHubApi.Services.Users;
-using Microsoft.AspNetCore.Http;
 using Moq;
 
 namespace ContactHubApiTests.Services
@@ -174,7 +173,7 @@ namespace ContactHubApiTests.Services
             _fakeUserRepository.Setup(repo => repo.GetUserById(userId))
                                 .ReturnsAsync(userModel);
 
-            _fakeMapper.Setup(m => m.Map<UserUIDetailsDto>(userModel))
+            _fakeMapper.Setup(m => m.Map<UserUIDetailsDto?>(userModel))
                         .Returns(userUIDetailsDto);
 
             // Act
@@ -257,7 +256,7 @@ namespace ContactHubApiTests.Services
             _fakeUserRepository.Setup(repo => repo.GetUserByUsername(username))
                                 .ReturnsAsync(userModel);
 
-            _fakeMapper.Setup(m => m.Map<UserUIDetailsDto>(userModel))
+            _fakeMapper.Setup(m => m.Map<UserUIDetailsDto?>(userModel))
                         .Returns(userUIDetailsDto);
 
             // Act
@@ -337,7 +336,7 @@ namespace ContactHubApiTests.Services
             _fakeUserRepository.Setup(repo => repo.GetUserByUsername(username))
                                 .ReturnsAsync(userModel);
 
-            _fakeMapper.Setup(m => m.Map<UserTokenDto>(userModel))
+            _fakeMapper.Setup(m => m.Map<UserTokenDto?>(userModel))
                         .Returns(userTokenDto);
 
             // Act
@@ -575,11 +574,9 @@ namespace ContactHubApiTests.Services
         {
             // Arrange
             var password = "password";
-            byte[] passwordHash;
-            byte[] passwordSalt;
 
             // Act
-            _userService.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            _userService.CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
             // Assert
             Assert.NotNull(passwordHash);
@@ -594,10 +591,8 @@ namespace ContactHubApiTests.Services
         {
             // Arrange
             var password = "password";
-            byte[] passwordHash;
-            byte[] passwordSalt;
 
-            _userService.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            _userService.CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
             // Act
             var result = _userService.VerifyPasswordHash(password, passwordHash, passwordSalt);
@@ -612,10 +607,8 @@ namespace ContactHubApiTests.Services
             // Arrange
             var password = "password";
             var wrongPassword = "wrongPassword";
-            byte[] passwordHash;
-            byte[] passwordSalt;
 
-            _userService.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            _userService.CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
             // Act
             var result = _userService.VerifyPasswordHash(wrongPassword, passwordHash, passwordSalt);

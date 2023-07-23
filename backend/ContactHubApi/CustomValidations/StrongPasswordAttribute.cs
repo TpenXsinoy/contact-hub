@@ -4,9 +4,9 @@ namespace ContactHubApi.Utils
 {
     public class StrongPasswordAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid(object? value)
         {
-            if (value == null || !(value is string password))
+            if (value == null || value is not string password)
             {
                 return false;
             }
