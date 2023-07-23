@@ -1,0 +1,91 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+@mixin base {
+  @include body(1rem, 1.5);
+  @include ease(0.1s);
+
+  border: 1px solid $neutral-300;
+  border-radius: 4px;
+  color: $neutral-700;
+  height: 114px;
+  min-height: 50px;
+  max-height: 240px;
+  outline: none;
+  overflow-y: scroll;
+  padding: 24px 16px 4px;
+  resize: vertical;
+  text-align: left;
+  width: 100%;
+
+  &:focus {
+    border-color: $violet-300;
+  }
+
+  &::placeholder {
+    opacity: 0.5;
+  }
+
+  @content;
+}
+
+@mixin base-icon($right: 16px) {
+  position: absolute;
+  right: $right;
+  color: $neutral-500;
+  user-select: none;
+
+  @content;
+}
+
+.TextArea {
+  &_container {
+    position: relative;
+  }
+
+  &_input {
+    @include base;
+
+    &_placeholder {
+      position: absolute;
+      pointer-events: none;
+      transform-origin: bottom left;
+      max-width: calc(100% - 16px);
+      padding: 0 8px;
+      left: 8px;
+      top: 16px;
+      transition: transform 0.25s;
+      @include text-ellipsis;
+
+      &___active {
+        transform: scale(0.75) translateY(-22px);
+      }
+    }
+
+    &:focus ~ .TextArea_input_placeholder {
+      transform: scale(0.75) translateY(-22px);
+    }
+  }
+
+  &_icon {
+    @include base-icon {
+      top: 20px;
+    }
+  }
+
+  &___icon {
+    padding-right: 32px;
+  }
+
+  &___error {
+    border-color: $red-300;
+  }
+
+  &___success {
+    border-color: $green-300;
+  }
+
+  &_helperTextContainer {
+    margin: 8px 0;
+  }
+}
