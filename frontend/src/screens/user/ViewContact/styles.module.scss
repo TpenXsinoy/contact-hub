@@ -1,0 +1,263 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+.ViewContact {
+  &_firstRow {
+    align-items: center;
+    background: $neutral-0;
+    box-shadow: $shadow-normal;
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    padding: 20px 30px;
+    position: fixed;
+    right: 0;
+    top: 65px;
+    z-index: 2;
+
+    @include breakpoint(xs) {
+      align-items: flex-start;
+      flex-direction: column;
+      row-gap: 20px;
+    }
+  }
+
+  &_secondRow {
+    margin-top: 93px;
+
+    @include breakpoint(xs) {
+      margin-top: 136px;
+    }
+  }
+
+  &_contactDetails {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+
+    @include breakpoint(sm) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include breakpoint(xs) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &_left {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background: $neutral-0;
+      box-shadow: $shadow-normal;
+      grid-column: auto / span 9;
+      padding: 32px 24px;
+
+      @include breakpoint(xs) {
+        padding: 28px 24px;
+      }
+
+      &_grid {
+        grid-column: auto / span 12;
+      }
+
+      &_circle {
+        background-color: #f4f2fb;
+        border-radius: 50%;
+      }
+
+      &_icon {
+        color: $green-400;
+        font-size: 40px;
+        padding: 10px;
+      }
+
+      &_details {
+        margin-left: 24px;
+      }
+    }
+
+    &_right {
+      @include flex-between;
+      background: $neutral-0;
+      box-shadow: $shadow-normal;
+      grid-column: 10/13;
+      padding: 32px 24px;
+
+      @include breakpoint(sm) {
+        gap: 16px;
+      }
+
+      &_details {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        @include breakpoint(xs) {
+          align-items: center;
+          flex-direction: row;
+          gap: 20px;
+        }
+      }
+
+      &_icon {
+        color: $violet-400;
+        font-size: 60px;
+
+        @include breakpoint(sm) {
+          font-size: 40px;
+        }
+      }
+    }
+  }
+
+  &_grid {
+    margin-top: 24px;
+
+    &_column {
+      background-color: $neutral-0;
+      border: 0.5px solid $border-200;
+      padding: 30px 8px;
+      text-align: center;
+
+      @include breakpoint(sm) {
+        border: unset;
+        border-bottom: 0.5px solid $border-200;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        justify-items: flex-start;
+        padding: 30px 40px;
+      }
+    }
+
+    &_addressGrid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+
+      @include breakpoint(sm) {
+        background-color: $neutral-0;
+        box-shadow: $shadow-normal;
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+      }
+    }
+
+    &_addressGrid[open] {
+      > summary {
+        > div {
+          > i {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    &_title {
+      align-items: center;
+      border-bottom: 2px solid $violet-400;
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      padding: 16px 24px;
+      @include flex-between;
+
+      &_info {
+        @include flex-center;
+        gap: 30px;
+
+        @include breakpoint(xs) {
+          gap: 16px;
+        }
+      }
+
+      &_icon {
+        background-color: $green-400;
+        border-radius: 100px;
+        color: $neutral-0;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 10px;
+      }
+    }
+
+    &_headers {
+      @include breakpoint(sm) {
+        display: none;
+      }
+    }
+
+    &_header {
+      background-color: $green-400;
+      color: $neutral-0;
+      padding: 18px 8px;
+
+      @include breakpoint(sm) {
+        padding: 8px;
+      }
+
+      &_action {
+        background-color: $blue-400;
+      }
+    }
+
+    &_buttons {
+      @include flex-center;
+    }
+
+    &_editButton {
+      color: $blue-400;
+    }
+
+    &_deleteButton {
+      color: $red-400;
+      margin-left: 5px;
+    }
+  }
+
+  &_withMargin {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+
+    @include breakpoint(xs) {
+      align-items: flex-start;
+      flex-direction: column;
+      row-gap: 20px;
+    }
+
+    &_searchInput {
+      margin-left: auto;
+      width: 250px;
+
+      @include breakpoint(xs) {
+        width: 100%;
+      }
+    }
+  }
+
+  &_noAddresses {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    justify-content: center;
+    text-align: center;
+
+    &_image {
+      margin-bottom: 60px;
+      max-width: 350px;
+    }
+
+    &_withMargin {
+      margin-top: 10px;
+    }
+  }
+
+  &_keyWrapper {
+    display: contents;
+  }
+}
