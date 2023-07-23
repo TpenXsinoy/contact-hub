@@ -23,6 +23,13 @@ namespace ContactHubApi.Repositories.Contacts
         public async Task<bool> DeleteContact(Guid id)
         {
             var contact = await _dbContext.Contacts.FindAsync(id);
+
+            if (contact == null)
+            {
+                return false;
+            }
+
+            _dbContext.Addresses.RemoveRange(contact.Addresses);
             _dbContext.Contacts.Remove(contact!);
             await _dbContext.SaveChangesAsync();
             return true;
