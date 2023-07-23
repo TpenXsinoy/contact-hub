@@ -1,0 +1,127 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+@mixin base($size) {
+  background-color: $neutral-0;
+  border-radius: 8px;
+  height: max-content;
+  outline: none !important;
+
+  @if $size == lg {
+    width: 1128px;
+  } @else if $size == md {
+    width: 700px;
+  } @else if $size == sm {
+    width: 560px;
+  } @else if $size == xs {
+    width: 320px;
+  }
+}
+
+@mixin overlay($position) {
+  background-color: transparentize($neutral-700, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  z-index: 1031;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+
+  @if ($position == center) {
+    align-items: center;
+  }
+}
+
+@mixin card($position) {
+  position: relative;
+
+  @if ($position == center) {
+    margin: 0 20px;
+  } @else {
+    margin: 40px 20px 0;
+
+    @include breakpoint(sm) {
+      margin: 40px 20px 0 0;
+    }
+  }
+
+  @content;
+}
+
+.Modal {
+  &___lg {
+    @include base(lg);
+  }
+
+  &___md {
+    @include base(md);
+  }
+
+  &___sm {
+    @include base(sm);
+  }
+
+  &___xs {
+    @include base(xs);
+  }
+
+  &___center {
+    @include card(center);
+  }
+
+  &___top {
+    @include card(top);
+  }
+
+  &_overlay {
+    &___center {
+      @include overlay(center);
+    }
+
+    &___top {
+      @include overlay(top);
+    }
+  }
+
+  &_title {
+    align-items: center;
+    background-color: $violet-400;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+
+  &_close {
+    background-color: transparent;
+    border: none;
+    color: $neutral-0;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+
+    &_icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  &_content {
+    max-height: 450px;
+    overflow-y: auto;
+    padding: 20px;
+
+    &_noPadding {
+      padding: 0;
+    }
+  }
+
+  &_footer {
+    padding: 0 20px 20px;
+  }
+}
