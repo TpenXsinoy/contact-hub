@@ -1,0 +1,22 @@
+.Tabs {
+  &_button,
+  &_link {
+    text-transform: capitalize;
+  }
+
+  &___horizontal___lg,
+  &___horizontal___sm {
+    display: flex;
+    overflow: auto;
+  }
+
+  &___vertical___lg {
+    display: grid;
+    grid-gap: 12px;
+  }
+
+  &___vertical___sm {
+    display: flex;
+    flex-direction: column;
+  }
+}
