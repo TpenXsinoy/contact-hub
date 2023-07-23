@@ -1,0 +1,129 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+@mixin solid($size) {
+  @include ease(0.3s);
+  @include flex-center;
+
+  background-color: transparent;
+  border: none;
+  color: $neutral-0;
+  cursor: pointer;
+  height: max-content;
+  outline: none;
+  padding: 4px;
+  text-decoration: none;
+  text-transform: capitalize;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+
+    &:hover,
+    &:focus {
+      background-color: transparent !important;
+    }
+  }
+
+  .IconButton_icon {
+    @if $size == xs {
+      font-size: 1rem;
+    } @else if $size == sm {
+      font-size: 1.25rem;
+    } @else if $size == md {
+      font-size: 1.5rem;
+    } @else if $size == lg {
+      font-size: 2rem;
+    }
+  }
+}
+
+@mixin outline($size) {
+  @include ease(0.3s);
+  @include flex-center;
+
+  background-color: transparent;
+  border: 1px solid $violet-300;
+  border-radius: 100px;
+  color: $violet-300;
+  cursor: pointer;
+  height: max-content;
+  outline: none;
+  padding: 4px;
+  text-decoration: none;
+  text-transform: capitalize;
+
+  &:hover {
+    background-color: transparentize($violet-300, 0.9);
+  }
+
+  &:focus,
+  &:active {
+    background-color: transparentize($violet-300, 0.75);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+
+    &:hover,
+    &:focus {
+      background-color: transparent !important;
+    }
+  }
+
+  .IconButton_icon {
+    @if $size == xs {
+      font-size: 1rem;
+    } @else if $size == sm {
+      font-size: 1.25rem;
+    } @else if $size == md {
+      font-size: 1.5rem;
+    } @else if $size == lg {
+      font-size: 2rem;
+    }
+  }
+}
+
+.IconButton {
+  &___solid {
+    &___xs {
+      @include solid(xs);
+    }
+
+    &___sm {
+      @include solid(sm);
+    }
+
+    &___md {
+      @include solid(md);
+    }
+
+    &___lg {
+      @include solid(lg);
+    }
+  }
+
+  &___outline {
+    &___xs {
+      @include outline(xs);
+    }
+
+    &___sm {
+      @include outline(sm);
+    }
+
+    &___md {
+      @include outline(md);
+    }
+
+    &___lg {
+      @include outline(lg);
+    }
+  }
+
+  &___disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}

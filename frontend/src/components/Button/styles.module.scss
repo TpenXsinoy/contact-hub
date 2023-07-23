@@ -1,0 +1,217 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+@mixin base {
+  @include ease(0.3s);
+  @include heading(1rem, 1.67);
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+
+  @content;
+}
+
+@mixin primary($bg, $bg-hover, $bg-pressed, $color) {
+  @include base {
+    background-color: $bg;
+    border: none;
+    border-radius: 4px;
+    color: $color;
+    padding: 10px 24px;
+
+    &:hover {
+      background-color: $bg-hover;
+    }
+
+    &:focus,
+    &:active {
+      background-color: $bg-pressed;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+
+      &:hover,
+      &:focus {
+        background-color: $bg !important;
+      }
+    }
+  }
+}
+
+@mixin secondary($color) {
+  @include base {
+    background-color: transparent;
+    border: 1px solid $color;
+    border-radius: 4px;
+    color: $color;
+    padding: 10px 24px;
+
+    &:hover {
+      background-color: transparentize($color, 0.9);
+    }
+
+    &:focus,
+    &:active {
+      background-color: transparentize($color, 0.75);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+
+      &:hover,
+      &:focus {
+        background-color: transparent !important;
+      }
+    }
+  }
+}
+
+@mixin text($color) {
+  @include base {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: $color;
+    padding: 0;
+
+    &:hover {
+      color: darken($color, 5%);
+    }
+
+    &:focus,
+    &:active {
+      color: darken($color, 15%);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+
+      &:hover,
+      &:focus {
+        color: $color !important;
+      }
+    }
+  }
+}
+
+.Button {
+  &___primary {
+    &___violet {
+      @include primary($violet-400, $violet-300, $violet-200, $neutral-0);
+    }
+
+    &___blue {
+      @include primary($blue-400, $blue-300, $blue-200, $neutral-0);
+    }
+
+    &___red {
+      @include primary($red-400, $red-300, $red-200, $neutral-0);
+    }
+
+    &___green {
+      @include primary($green-400, $green-300, $green-200, $neutral-0);
+    }
+
+    &___yellow {
+      @include primary($yellow-400, $yellow-300, $yellow-200, $neutral-0);
+    }
+  }
+
+  &___secondary {
+    &___violet {
+      @include secondary($violet-300);
+    }
+
+    &___blue {
+      @include secondary($blue-300);
+    }
+
+    &___red {
+      @include secondary($red-300);
+    }
+
+    &___green {
+      @include secondary($green-300);
+    }
+
+    &___yellow {
+      @include secondary($yellow-300);
+    }
+  }
+
+  &___tertiary {
+    @include base {
+      background-color: $neutral-100;
+      border: none;
+      border-radius: 100px;
+      color: $neutral-700;
+      padding: 10px 24px;
+
+      &:hover {
+        background-color: $neutral-200;
+      }
+
+      &:focus,
+      &:active {
+        background-color: $neutral-300;
+      }
+
+      &:disabled {
+        cursor: default;
+        opacity: 0.5;
+
+        &:hover,
+        &:focus {
+          background-color: $neutral-100;
+        }
+      }
+    }
+  }
+
+  &___text {
+    &___violet {
+      @include text($violet-300);
+    }
+
+    &___blue {
+      @include text($blue-300);
+    }
+
+    &___red {
+      @include text($red-300);
+    }
+
+    &___green {
+      @include text($green-300);
+    }
+
+    &___yellow {
+      @include text($yellow-300);
+    }
+  }
+
+  &___withIcon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    &_iconLeft {
+      margin-right: 8px;
+    }
+
+    &_iconRight {
+      margin-left: 8px;
+    }
+  }
+
+  &___disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
