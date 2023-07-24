@@ -1,6 +1,7 @@
 import { isLocal } from "../utils/destinations";
 
-let apiUrl = null;
+// Url of the API in Azure
+let apiUrl = "contacthubapi.azurewebsites.net";
 
 if (isLocal) {
   apiUrl = "https://localhost:7130";
