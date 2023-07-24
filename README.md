@@ -1,8 +1,7 @@
 # Contact Hub
 
 ![Alt text](frontend/src/assets/images/Logo/logo.png)
-An application to manage your contacts.
 
-## Contact Hub Website
+## An application to manage your contacts
 
-[Contact Hub](https://contacthubapp.azurewebsites.net/login)
+## Click here to visit the website: [Contact Hub](https://contacthubapp.azurewebsites.net/login)
