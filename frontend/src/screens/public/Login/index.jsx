@@ -45,7 +45,6 @@ const Login = () => {
   const { loginUpdate } = useContext(UserContext);
   const cookies = new Cookies();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isForgotPasswordToggled, toggleIsForgotPassword] = useState(false);
 
   return (
     <>
@@ -169,14 +168,6 @@ const Login = () => {
                     {errors.overall}
                   </Text>
                 )}
-
-                {/* <Button
-                  type={buttonTypes.TEXT.GREEN}
-                  className={styles.Login_content_forgotPassword}
-                  onClick={() => toggleIsForgotPassword(true)}
-                >
-                  Forgot Password?
-                </Button> */}
 
                 <div className={styles.Login_content_buttonGroup}>
                   <Button
