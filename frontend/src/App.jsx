@@ -56,11 +56,13 @@ function App() {
                 name="Logout"
                 render={(props) => <Logout {...props} />}
               />
+
               <PrivateRoute
                 path="/user"
                 name="User"
                 render={(props) => <User {...props} />}
               />
+
               <Route
                 path="/"
                 name="Login/Sign Up"

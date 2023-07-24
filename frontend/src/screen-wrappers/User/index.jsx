@@ -15,6 +15,7 @@ import {
 
 import styles from "./styles.module.scss";
 import USER_ROUTES from "../constants/userRoutes";
+import { PageNotFound } from "src/screens/public";
 
 const UserContainer = () => {
   const location = useLocation();
@@ -89,6 +90,8 @@ const UserContainer = () => {
               exact
               render={(props) => <Settings {...props} />}
             />
+
+            <Route component={PageNotFound} />
 
             <Redirect from="*" to={USER_ROUTES.CONTACTS} />
           </Switch>
