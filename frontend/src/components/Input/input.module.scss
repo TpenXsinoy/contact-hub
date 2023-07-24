@@ -1,0 +1,137 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+@mixin base {
+  @include body(1rem, 1.5);
+  color: $neutral-700;
+  background: $neutral-0;
+  outline: none;
+  text-align: left;
+  width: 100%;
+
+  &::placeholder {
+    opacity: 0.5;
+  }
+
+  @content;
+}
+
+@mixin base-slim {
+  @include base {
+    border: 1px solid;
+    border-color: $neutral-300;
+    border-radius: 4px;
+    padding: 14px 16px;
+    transition: all 0.1s ease-out;
+
+    &:disabled {
+      border-color: $neutral-300;
+    }
+
+    &:focus {
+      border-color: $green-300;
+    }
+  }
+}
+
+@mixin base-form {
+  @include base {
+    @include ease(0.1s);
+    border: 1px solid;
+    border-color: $neutral-300;
+    border-radius: 4px;
+    padding: 24px 16px 4px;
+
+    &:disabled {
+      border-color: $neutral-300;
+    }
+
+    &:focus {
+      border-color: $green-300;
+    }
+  }
+}
+
+@mixin base-icon($right: 16px) {
+  border-color: $neutral-400;
+  color: $neutral-500 !important;
+  font-size: 1.2rem !important;
+  position: absolute;
+  right: $right;
+  user-select: none;
+
+  @content;
+}
+
+.Input {
+  &___slim {
+    @include base-slim;
+
+    &_label {
+      margin-bottom: 8px !important;
+    }
+
+    &_icon {
+      @include base-icon(16px);
+      top: 47px;
+    }
+
+    &___icon {
+      padding-right: 26px;
+    }
+  }
+
+  &___form {
+    @include base-form;
+
+    &_label {
+      left: 8px;
+      max-width: calc(100% - 16px);
+      padding: 0 8px;
+      pointer-events: none;
+      position: absolute;
+      top: 16px;
+      transform-origin: bottom left;
+      transition: transform 0.25s;
+      @include text-ellipsis;
+
+      &___active {
+        transform: scale(0.75) translateY(-22px);
+      }
+    }
+
+    &_icon {
+      @include base-icon;
+      top: 20px;
+    }
+
+    &___icon {
+      padding-right: 32px;
+    }
+
+    &:focus ~ .Input___form_label {
+      transform: scale(0.75) translateY(-22px);
+    }
+  }
+
+  &___error {
+    border-color: $red-400 !important;
+  }
+
+  &___success {
+    border-color: $green-400 !important;
+  }
+
+  &___disabled {
+    background-color: $neutral-100;
+  }
+
+  &_helperTextContainer {
+    margin: 8px 0;
+    text-align: left;
+  }
+
+  &_container {
+    position: relative;
+  }
+}

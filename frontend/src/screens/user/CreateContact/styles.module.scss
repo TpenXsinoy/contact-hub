@@ -1,0 +1,30 @@
+@import "src/styles/mixins";
+
+.CreateContact {
+  &_card {
+    margin-top: 20px;
+    max-width: 450px;
+    padding: 20px;
+  }
+
+  &_withMargin {
+    margin-top: 20px;
+  }
+
+  &_buttonGroup {
+    margin-top: 40px;
+
+    &_button {
+      width: 100%;
+    }
+
+    &_buttonText {
+      @include flex-center;
+    }
+
+    &_spinner {
+      margin-left: 12px;
+      width: auto !important;
+    }
+  }
+}

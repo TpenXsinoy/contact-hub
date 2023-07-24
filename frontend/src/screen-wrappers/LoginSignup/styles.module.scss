@@ -1,0 +1,11 @@
+@import "src/styles/mixins";
+
+.LoginSignupContainer {
+  @include flex-center;
+  height: 100%;
+
+  @include breakpoint(xs) {
+    height: auto;
+    margin: 24px;
+  }
+}

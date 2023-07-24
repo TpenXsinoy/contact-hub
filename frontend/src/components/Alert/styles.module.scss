@@ -1,0 +1,31 @@
+@import "src/styles/variables";
+
+.Alert {
+  align-items: center;
+  bottom: 20px;
+  border-radius: 3px;
+  color: $neutral-0;
+  display: flex;
+  padding: 15px;
+  width: 280px;
+
+  &_icon {
+    font-size: 1.5rem !important;
+  }
+
+  &_message {
+    margin-left: 10px !important;
+  }
+
+  &___info {
+    background-color: $blue-400;
+  }
+
+  &___success {
+    background-color: $green-400;
+  }
+
+  &___error {
+    background-color: $red-400;
+  }
+}

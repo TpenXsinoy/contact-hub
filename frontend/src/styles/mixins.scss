@@ -1,0 +1,87 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Responsive Breakpoint Mixin
+@mixin breakpoint($class) {
+  @if $class==xs {
+    @media (max-width: 575px) {
+      @content;
+    }
+  } @else if $class==sm {
+    @media (max-width: 767px) {
+      @content;
+    }
+  } @else if $class==md {
+    @media (max-width: 991px) {
+      @content;
+    }
+  } @else if $class==lg {
+    @media (max-width: 1199px) {
+      @content;
+    }
+  } @else if $class==xl {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  } @else {
+    @warn 'Breakpoint mixin supports: xs, sm, md, lg, xl';
+  }
+}
+
+// Animations
+@mixin ease($duration: 0.5s) {
+  transition: $duration ease;
+}
+
+@mixin linear($duration: 0.5s) {
+  transition: $duration linear;
+}
+
+// Text Styles
+@mixin heading($size, $height) {
+  font-family: Muli, sans-serif;
+  font-size: $size;
+  line-height: $height;
+  font-weight: 700;
+  font-style: normal;
+  margin: 0;
+}
+
+@mixin body($size, $height) {
+  font-family: "Open Sans", sans-serif;
+  font-size: $size;
+  line-height: $height;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+}
+
+@mixin span($size, $height) {
+  font-family: "Open Sans", sans-serif;
+  font-size: $size;
+  line-height: $height;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+}

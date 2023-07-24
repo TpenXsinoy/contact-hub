@@ -1,0 +1,62 @@
+@import "src/styles/variables";
+@import "src/styles/mixins";
+
+.Login {
+  max-width: 450px;
+  text-align: center;
+  width: 100%;
+
+  &_header {
+    padding: 20px;
+
+    &_logo {
+      width: 200px;
+    }
+
+    &_headingTextWrapper {
+      border-bottom: 1px solid $neutral-200;
+      margin: 20px 0;
+      text-align: center;
+
+      &_headingText {
+        background-color: $neutral-0;
+        bottom: -8px;
+        padding: 0 10px;
+        position: relative;
+      }
+    }
+  }
+
+  &_content {
+    padding: 0 20px 20px;
+
+    &_input {
+      margin-top: 10px;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      &_errorMessage {
+        margin-top: 8px;
+        text-align: left;
+      }
+    }
+
+    &_buttonGroup {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 16px;
+      margin-top: 40px;
+
+      &_buttonText {
+        @include flex-center;
+      }
+
+      &_spinner {
+        margin-left: 12px;
+        width: auto;
+      }
+    }
+  }
+}

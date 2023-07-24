@@ -1,0 +1,40 @@
+@import "src/styles/variables";
+
+@mixin base {
+  align-items: center;
+  color: $neutral-600;
+  display: flex;
+  flex-direction: column;
+  font-family: "Muli", sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  text-decoration: none;
+  padding: 0.8rem 1rem;
+  position: relative;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: $border-200;
+  }
+
+  @content;
+}
+
+.SidebarLink {
+  @include base;
+
+  &___active {
+    background: $border-200 !important;
+    color: $green-400 !important;
+
+    > i {
+      color: $green-400 !important;
+    }
+  }
+
+  &_icon {
+    color: $neutral-500 !important;
+    font-size: 2.7rem !important;
+  }
+}

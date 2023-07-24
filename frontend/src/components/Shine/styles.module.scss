@@ -1,0 +1,29 @@
+@import "src/styles/animations";
+@import "src/styles/variables";
+
+.Shine {
+  height: 10px;
+  width: 100%;
+  background-color: $neutral-100;
+  background-image: linear-gradient(
+    to right,
+    $neutral-100 0%,
+    $neutral-200 20%,
+    $neutral-100 40%,
+    $neutral-100 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  display: inline-block;
+  position: relative;
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+
+  &___rounded {
+    border-radius: 16px;
+  }
+}

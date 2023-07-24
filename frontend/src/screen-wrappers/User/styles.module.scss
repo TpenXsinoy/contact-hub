@@ -1,0 +1,11 @@
+@import "src/styles/mixins";
+
+.UserContainer {
+  padding: 95px 30px 30px;
+
+  @include breakpoint(sm) {
+    margin-left: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}

@@ -1,0 +1,48 @@
+@import "./variables";
+@import "./fonts";
+@import "./mixins";
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+  height: 100%;
+  width: 100%;
+
+  @include breakpoint(xs) {
+    height: auto;
+  }
+}
+
+body {
+  background-color: $border-200;
+  color: $neutral-700;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+
+  @include breakpoint(xs) {
+    height: auto;
+  }
+}
+
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
