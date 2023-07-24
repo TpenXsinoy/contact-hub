@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen(options =>
         Contact = new OpenApiContact
         {
             Name = "Contact Hub",
-            Url = new Uri("https://contacthubapp.azurewebsites.net/")
+            Url = new Uri("https://contacthubapp.azurewebsites.net/login")
         },
     });
 
