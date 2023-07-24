@@ -1,0 +1,20 @@
+@import "src/styles/mixins.scss";
+.PageNotFound {
+  @include flex-center;
+  flex-direction: column;
+
+  &_image {
+    margin: 12px;
+    width: 35%;
+    min-width: 300px;
+  }
+
+  &_404 {
+    font-size: 90px;
+    margin: 12px;
+  }
+
+  &_button {
+    margin-top: 16px;
+  }
+}
