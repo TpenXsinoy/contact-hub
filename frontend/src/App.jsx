@@ -8,7 +8,7 @@ import { PrivateRoute } from "src/hocs";
 import { LoginSignup, User } from "src/screen-wrappers";
 import { Logout } from "src/screens/public";
 
-import "src/styles/App.scss";
+import "src/styles/app.scss";
 
 const cookies = new Cookies();
 
