@@ -16,9 +16,9 @@ run `docker-compose up` in terminal
 
 [Backend Image Repository Link](https://hub.docker.com/repository/docker/tpenxsinoy123/contacthubapi/general)
 
-`docker push tpenxsinoy123/contacthubapi:tagname``
+`docker push tpenxsinoy123/contacthubapi:tagname`
 
-`docker pull tpenxsinoy123/contacthubapi:tagname``
+`docker pull tpenxsinoy123/contacthubapi:tagname`
 
 [Frontend Image Repository Link](https://hub.docker.com/repository/docker/tpenxsinoy123/contacthubapp/general)
 
