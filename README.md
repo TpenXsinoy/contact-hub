@@ -16,23 +16,19 @@ run `docker-compose up` in terminal
 
 [Backend Image Repository Link](https://hub.docker.com/repository/docker/tpenxsinoy123/contacthubapi/general)
 
-```docker
-docker push tpenxsinoy123/contacthubapi:tagname
-docker pull tpenxsinoy123/contacthubapi:tagname
-```
+`docker push tpenxsinoy123/contacthubapi:tagname``
+
+`docker pull tpenxsinoy123/contacthubapi:tagname``
 
 [Frontend Image Repository Link](https://hub.docker.com/repository/docker/tpenxsinoy123/contacthubapp/general)
 
-```docker
-docker push tpenxsinoy123/contacthubapp:tagname
-docker pull tpenxsinoy123/contacthubapp:tagname
-```
+`docker push tpenxsinoy123/contacthubapp:tagname`
+
+`docker pull tpenxsinoy123/contacthubapp:tagname`
 
 [Microsoft Sql Server Repository Link](https://hub.docker.com/_/microsoft-mssql-server#!)
 
-```docker
-docker pull mcr.microsoft.com/mssql/server:2022-latest
-```
+`docker pull mcr.microsoft.com/mssql/server:2022-latest`
 
 # Deployment
 
@@ -49,14 +45,12 @@ Password: iJLHkcUUKfE9QYz7tsVhZlUY/P0EUNt1ncMGeMxo33+ACRAi/AaI
 
 ### Backend Image
 
-```docker
-docker push contacthubdocker.azurecr.io/contacthubapi:latest
-docker pull contacthubdocker.azurecr.io/contacthubapi:latest
-```
+`docker push contacthubdocker.azurecr.io/contacthubapi:latest`
+
+`docker pull contacthubdocker.azurecr.io/contacthubapi:latest`
 
 ### Frontend Image
 
-```docker
-docker push contacthubdocker.azurecr.io/contacthub-app:latest
-docker pull contacthubdocker.azurecr.io/contacthub-app:latest
-```
+`docker push contacthubdocker.azurecr.io/contacthub-app:latest`
+
+`docker pull contacthubdocker.azurecr.io/contacthub-app:latest`
