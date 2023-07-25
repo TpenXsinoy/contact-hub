@@ -35,7 +35,7 @@ namespace ContactHubApi.Services.Contacts
             return _mapper.Map<IReadOnlyCollection<ContactDto>>(contactModels);
         }
 
-        public async Task<ContactAddressDto?> GetContactById(Guid id)
+        public async Task<Contact?> GetContactById(Guid id)
         {
             var contactModel = await _contactRepository.GetContactById(id);
             if (contactModel == null)
@@ -43,7 +43,7 @@ namespace ContactHubApi.Services.Contacts
                 return null;
             }
 
-            return _mapper.Map<ContactAddressDto>(contactModel);
+            return contactModel;
         }
 
         public async Task<ContactDto> UpdateContact(Guid id, ContactCreationDto contact)

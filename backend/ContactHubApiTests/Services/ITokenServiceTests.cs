@@ -22,11 +22,7 @@ namespace ContactHubApiTests.Services
         public void CreateToken_Should_ReturnValidJwtToken()
         {
             // Arrange
-            var user = new UserTokenDto
-            {
-                Username = "john_doe",
-                Email = "john.doe@example.com"
-            };
+            var user = new UserTokenDto();
 
             _fakeConfiguration.Setup(config => config["Jwt:Key"])
                                 .Returns("DhftOS5uphK3vmCJQrexST1RsyjZBjXWRgJMFPU4");

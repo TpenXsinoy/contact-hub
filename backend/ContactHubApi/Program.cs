@@ -8,16 +8,31 @@ using ContactHubApi.Services.Addresses;
 using ContactHubApi.Services.Contacts;
 using ContactHubApi.Services.Tokens;
 using ContactHubApi.Services.Users;
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
+Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "../../env/backend.env"));
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Set up the configuration object
+var config = new ConfigurationBuilder()
+    .AddEnvironmentVariables()
+    .Build();
+
+// Replace placeholders with environment variables in connection string
+var connectionString = builder.Configuration.GetConnectionString("ContactHubDb")!
+    .Replace("DB_HOST", Environment.GetEnvironmentVariable("DB_HOST"))
+    .Replace("DB_NAME", Environment.GetEnvironmentVariable("DB_NAME"))
+    .Replace("DB_USER", Environment.GetEnvironmentVariable("DB_USER"))
+    .Replace("DB_SA_PASSWORD", Environment.GetEnvironmentVariable("DB_SA_PASSWORD"));
+
 builder.Services.AddDbContext<ContactHubContext>(opt =>
-opt.UseSqlServer(builder.Configuration.GetConnectionString("ContactHubDb")));
+        opt.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddControllers();

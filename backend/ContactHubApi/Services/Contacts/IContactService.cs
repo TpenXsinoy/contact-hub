@@ -31,7 +31,7 @@ namespace ContactHubApi.Services.Contacts
         /// </summary>
         /// <param name="id">Contact Id</param>
         /// <returns>ContactAddressDto details with id the same as the param</returns>
-        Task<ContactAddressDto?> GetContactById(Guid id);
+        Task<Contact?> GetContactById(Guid id);
 
         /// <summary>
         /// Updates a contact

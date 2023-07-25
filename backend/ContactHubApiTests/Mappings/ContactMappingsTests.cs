@@ -26,6 +26,7 @@ namespace ContactHubApiTests.Mappings
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "1234567890",
                 UserId = It.IsAny<Guid>(),
             };
 
@@ -34,6 +35,7 @@ namespace ContactHubApiTests.Mappings
                 Id = It.IsAny<Guid>(),
                 FirstName = contactCreationDto.FirstName,
                 LastName = contactCreationDto.LastName,
+                PhoneNumber = contactCreationDto.PhoneNumber,
                 Addresses = new List<Address>(),
                 UserId = contactCreationDto.UserId
             };
@@ -49,38 +51,6 @@ namespace ContactHubApiTests.Mappings
             Assert.Equal(contact.UserId, result.UserId);
         }
 
-        // Contact to ContactAddressDto
-        [Fact]
-        public void Map_ValidContact_ReturnsContactAddressDto()
-        {
-            //Arrange
-            var contact = new Contact
-            {
-                Id = It.IsAny<Guid>(),
-                FirstName = "John",
-                LastName = "Doe",
-                Addresses = new List<Address>(),
-                UserId = It.IsAny<Guid>()
-            };
-
-            var contactAddressDto = new ContactAddressDto
-            {
-                Id = contact.Id,
-                FirstName = contact.FirstName,
-                LastName = contact.LastName,
-                Addresses = contact.Addresses
-            };
-
-            //Act
-            var result = _mapper.Map<ContactAddressDto>(contact);
-
-            //Assert
-            Assert.Equal(contactAddressDto.Id, result.Id);
-            Assert.Equal(contactAddressDto.FirstName, result.FirstName);
-            Assert.Equal(contactAddressDto.LastName, result.LastName);
-            Assert.Equal(contactAddressDto.Addresses, result.Addresses);
-        }
-
         // Contact to ContactDto
         [Fact]
         public void Map_ValidContact_ReturnsContactDto()
@@ -91,6 +61,7 @@ namespace ContactHubApiTests.Mappings
                 Id = It.IsAny<Guid>(),
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "1234567890",
                 Addresses = new List<Address>(),
                 UserId = It.IsAny<Guid>()
             };
@@ -100,6 +71,7 @@ namespace ContactHubApiTests.Mappings
                 Id = contact.Id,
                 FirstName = contact.FirstName,
                 LastName = contact.LastName,
+                PhoneNumber = contact.PhoneNumber
             };
 
             //Act

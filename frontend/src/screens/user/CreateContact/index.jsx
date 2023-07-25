@@ -11,10 +11,12 @@ import {
   Spinner,
 } from "src/components";
 
+import { buttonKinds, colorNames, spinnerSizes } from "src/app-globals";
+
 import { UserContext } from "src/contexts";
 import { useCreateContact } from "src/hooks";
 
-import { buttonKinds, colorNames, spinnerSizes } from "src/app-globals";
+import { isValidPhoneNumber } from "src/utils/string";
 
 import styles from "./styles.module.scss";
 
@@ -31,6 +33,12 @@ const validate = (values) => {
     errors.lastName = "This filed is required.";
   } else if (values.lastName.length > 50) {
     errors.lastName = "The maximum length of this field is 50 characters.";
+  }
+
+  if (!values.phoneNumber) {
+    errors.phoneNumber = "This filed is required.";
+  } else if (!isValidPhoneNumber(values.phoneNumber)) {
+    errors.phoneNumber = "Please enter a valid phone number.";
   }
 
   return errors;
@@ -59,11 +67,13 @@ const CreateContact = () => {
           initialValues={{
             firstName: "",
             lastName: "",
+            phoneNumber: "",
           }}
           onSubmit={async (values, { setErrors, setFieldValue }) => {
             const currentFormValues = {
               firstName: values.firstName,
               lastName: values.lastName,
+              phoneNumber: values.phoneNumber,
               userId: user.id,
             };
 
@@ -83,6 +93,7 @@ const CreateContact = () => {
                 // Reset form values
                 setFieldValue("firstName", "");
                 setFieldValue("lastName", "");
+                setFieldValue("phoneNumber", "");
               },
               invalidFields: () => alert.error("Invalid fields."),
               internalError: () => alert.error("Oops, something went wrong."),
@@ -122,6 +133,16 @@ const CreateContact = () => {
                 value={values.lastName}
                 error={errors.lastName}
                 onChange={(e) => setFieldValue("lastName", e.target.value)}
+              />
+
+              <ControlledInput
+                className={styles.CreateContact_withMargin}
+                name="phoneNumber"
+                placeholder="Phone Number*"
+                icon="call"
+                value={values.phoneNumber}
+                error={errors.phoneNumber}
+                onChange={(e) => setFieldValue("phoneNumber", e.target.value)}
               />
 
               <div className={styles.CreateContact_buttonGroup}>

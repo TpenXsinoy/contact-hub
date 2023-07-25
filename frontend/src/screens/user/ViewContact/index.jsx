@@ -59,6 +59,7 @@ const ViewContact = () => {
             },
           ]}
         />
+
         <ButtonLink
           to={`/user/contacts/${contactId}/addresses/create`}
           type={buttonTypes.PRIMARY.VIOLET}
@@ -82,10 +83,26 @@ const ViewContact = () => {
                   icon="account_box"
                 />
               </div>
+
               <div className={styles.ViewContact_contactDetails_left_details}>
                 <Text type={textTypes.HEADING.XS}>
                   {contact.firstName} {contact.lastName}
                 </Text>
+
+                <div
+                  className={
+                    styles.ViewContact_contactDetails_left_details_subinfo
+                  }
+                >
+                  <Icon icon="call" />
+
+                  <Text
+                    type={textTypes.BODY.MD}
+                    colorClass={colorClasses.NEUTRAL["400"]}
+                  >
+                    {contact.phoneNumber}
+                  </Text>
+                </div>
               </div>
             </div>
 
@@ -130,6 +147,7 @@ const ViewContact = () => {
 
       <div className={styles.ViewContact_withMargin}>
         <Text type={textTypes.HEADING.XS}>Address List</Text>
+
         <ControlledInput
           className={styles.ViewContact_withMargin_searchInput}
           placeholder="Search"
@@ -161,6 +179,7 @@ const ViewContact = () => {
                 >
                   Address Type
                 </div>
+
                 <div
                   className={cn(
                     styles.ViewContact_grid_header,
@@ -169,6 +188,7 @@ const ViewContact = () => {
                 >
                   Street
                 </div>
+
                 <div
                   className={cn(
                     styles.ViewContact_grid_header,
@@ -177,6 +197,7 @@ const ViewContact = () => {
                 >
                   City
                 </div>
+
                 <div
                   className={cn(
                     styles.ViewContact_grid_header,
@@ -185,6 +206,7 @@ const ViewContact = () => {
                 >
                   State
                 </div>
+
                 <div
                   className={cn(
                     styles.ViewContact_grid_header,
@@ -193,6 +215,7 @@ const ViewContact = () => {
                 >
                   Postal Code
                 </div>
+
                 <div
                   className={cn(
                     styles.ViewContact_grid_header,
@@ -217,15 +240,19 @@ const ViewContact = () => {
                       <div className={styles.ViewContact_grid_column}>
                         {addressType}
                       </div>
+
                       <div className={styles.ViewContact_grid_column}>
                         {street}
                       </div>
+
                       <div className={styles.ViewContact_grid_column}>
                         {city}
                       </div>
+
                       <div className={styles.ViewContact_grid_column}>
                         {state}
                       </div>
+
                       <div className={styles.ViewContact_grid_column}>
                         {postalCode}
                       </div>
@@ -258,6 +285,7 @@ const ViewContact = () => {
                             icon="expand_more"
                             className={styles.ViewContact_grid_title_icon}
                           />
+
                           <Text type={textTypes.HEADING.XS}>{addressType}</Text>
                         </div>
 
@@ -282,8 +310,10 @@ const ViewContact = () => {
                         >
                           Address Type:
                         </Text>
+
                         <Text type={textTypes.HEADING.XXS}>{addressType}</Text>
                       </div>
+
                       <div className={styles.ViewContact_grid_column}>
                         <Text
                           type={textTypes.HEADING.XXS}
@@ -291,8 +321,10 @@ const ViewContact = () => {
                         >
                           Street:
                         </Text>
+
                         <Text type={textTypes.HEADING.XXS}>{street}</Text>
                       </div>
+
                       <div className={styles.ViewContact_grid_column}>
                         <Text
                           type={textTypes.HEADING.XXS}
@@ -300,8 +332,10 @@ const ViewContact = () => {
                         >
                           City:
                         </Text>
+
                         <Text type={textTypes.HEADING.XXS}>{city}</Text>
                       </div>
+
                       <div className={styles.ViewContact_grid_column}>
                         <Text
                           type={textTypes.HEADING.XXS}
@@ -309,8 +343,10 @@ const ViewContact = () => {
                         >
                           State:
                         </Text>
+
                         <Text type={textTypes.HEADING.XXS}>{state}</Text>
                       </div>
+
                       <div className={styles.ViewContact_grid_column}>
                         <Text
                           type={textTypes.HEADING.XXS}
@@ -318,6 +354,7 @@ const ViewContact = () => {
                         >
                           Postal Code:
                         </Text>
+
                         <Text type={textTypes.HEADING.XXS}>{postalCode}</Text>
                       </div>
                     </details>

@@ -69,6 +69,16 @@ namespace ContactHubApi.Controllers
                     return NotFound($"User with ID {request.UserId} is not found");
                 }
 
+                ClaimsIdentity? identity  = HttpContext.User.Identity as ClaimsIdentity;
+
+                var loggedInUser = _userService.GetCurrentUser(identity);
+
+                if (loggedInUser == null || user.Id != loggedInUser.Id)
+                {
+                    return Unauthorized();
+                }
+
+
                 var newContact = await _contactService.CreateContact(request);
 
                 return CreatedAtRoute("GetContactById", new { id = newContact.Id }, newContact);
@@ -183,7 +193,7 @@ namespace ContactHubApi.Controllers
         /// <response code="500">Internal server error</response>
         [HttpGet("{id}", Name = "GetContactById")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(ContactAddressDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Contact), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -196,6 +206,15 @@ namespace ContactHubApi.Controllers
                 if (contact == null)
                 {
                     return NotFound($"Contact with ID {id} is not found");
+                }
+
+                ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
+
+                var loggedInUser = _userService.GetCurrentUser(identity);
+
+                if (loggedInUser == null || contact.UserId != loggedInUser.Id)
+                {
+                    return Unauthorized();
                 }
 
                 return Ok(contact);
@@ -248,6 +267,15 @@ namespace ContactHubApi.Controllers
                     return NotFound($"User with ID {request.UserId} is not found");
                 }
 
+                ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
+
+                var loggedInUser = _userService.GetCurrentUser(identity);
+
+                if (loggedInUser == null || user.Id != loggedInUser.Id)
+                {
+                    return Unauthorized();
+                }
+
                 var contact = await _contactService.GetContactById(id);
 
                 if (contact == null)
@@ -296,6 +324,15 @@ namespace ContactHubApi.Controllers
                 if (contact == null)
                 {
                     return NotFound($"Contact with ID {id} is not found");
+                }
+
+                ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
+
+                var loggedInUser = _userService.GetCurrentUser(identity);
+
+                if (loggedInUser == null || contact.UserId != loggedInUser.Id)
+                {
+                    return Unauthorized();
                 }
 
                 await _contactService.DeleteContact(id);

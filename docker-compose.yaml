@@ -1,0 +1,51 @@
+version: "3.8"
+
+networks:
+  contacthub-network:
+    driver: bridge
+
+volumes:
+  sql-data:
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: contacthub-db
+    ports:
+      - 8002:1433
+    volumes:
+      - sql-data:/var/opt/mssql
+    env_file:
+      - ./env/sqlserver.env
+    networks:
+      - contacthub-network
+
+  backend:
+    build: ./backend/ContactHubApi
+    image: contacthubapi
+    container_name: contacthub-api
+    ports:
+      - 80:80
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - sqlserver
+    networks:
+      - contacthub-network
+
+  frontend:
+    build: ./frontend
+    image: contacthubapp
+    container_name: contacthub-app
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend
+    networks:
+      - contacthub-network
+    environment:
+      - WATCHPACK_POLLING=true
+    stdin_open: true
+    tty: true

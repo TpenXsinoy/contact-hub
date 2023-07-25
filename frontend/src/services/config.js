@@ -1,10 +1,11 @@
 import { isLocal } from "../utils/destinations";
 
 // Url of the API in Azure
-let apiUrl = "https://contacthubapi.azurewebsites.net";
+let apiUrl = "https://contacthubapicontainer.azurewebsites.net";
 
 if (isLocal) {
-  apiUrl = "https://localhost:7130";
+  // Change to "https://localhost:7130" when not in docker development
+  apiUrl = "http://localhost:80";
 }
 
 const config = {

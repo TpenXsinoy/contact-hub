@@ -29,6 +29,7 @@ namespace ContactHubApiTests.Services
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "1234567890",
                 UserId = Guid.NewGuid()
             };
 
@@ -37,6 +38,7 @@ namespace ContactHubApiTests.Services
                 Id = Guid.NewGuid(),
                 FirstName = contactCreationDto.FirstName,
                 LastName = contactCreationDto.LastName,
+                PhoneNumber = contactCreationDto.PhoneNumber,
                 Addresses = new List<Address>(),
                 UserId = contactCreationDto.UserId
             };
@@ -64,6 +66,7 @@ namespace ContactHubApiTests.Services
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "1234567890",
                 UserId = Guid.NewGuid()
             };
 
@@ -72,6 +75,7 @@ namespace ContactHubApiTests.Services
                 Id = Guid.NewGuid(),
                 FirstName = contactCreationDto.FirstName,
                 LastName = contactCreationDto.LastName,
+                PhoneNumber = contactCreationDto.PhoneNumber,
                 Addresses = new List<Address>(),
                 UserId = contactCreationDto.UserId
             };
@@ -153,6 +157,7 @@ namespace ContactHubApiTests.Services
                     Id = contactId,
                     FirstName = "John",
                     LastName =  "Doe",
+                    PhoneNumber = "123213",
                     Addresses = new List<Address>(),
                     UserId = userId
                 }
@@ -164,7 +169,8 @@ namespace ContactHubApiTests.Services
                 {
                     Id = contactId,
                     FirstName = "John",
-                    LastName =  "Doe"
+                    LastName =  "Doe",
+                    PhoneNumber = "123213"
                 }
             };
 
@@ -236,6 +242,7 @@ namespace ContactHubApiTests.Services
                 Id = contactId,
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123213",
                 Addresses = new List<Address>()
                 {
                     new Address
@@ -252,27 +259,16 @@ namespace ContactHubApiTests.Services
                 UserId = Guid.NewGuid()
             };
 
-            var contactAddressDto = new ContactAddressDto
-            {
-                Id = contactModel.Id,
-                FirstName = contactModel.FirstName,
-                LastName = contactModel.LastName,
-                Addresses = contactModel.Addresses
-            };
-
             _fakeContactRepository.Setup(repo => repo.GetContactById(contactId))
                                     .ReturnsAsync(contactModel);
-
-            _fakeMapper.Setup(m => m.Map<ContactAddressDto>(contactModel))
-                        .Returns(contactAddressDto);
 
             // Act
             var result = await _contactService.GetContactById(contactId);
 
             // Assert
-            Assert.Equal(contactAddressDto, result);
+            Assert.Equal(contactModel, result);
             Assert.NotNull(result);
-            Assert.IsType<ContactAddressDto>(result);
+            Assert.IsType<Contact>(result);
         }
 
         [Fact]
@@ -282,20 +278,15 @@ namespace ContactHubApiTests.Services
             var contactId = It.IsAny<Guid>();
 
             Contact? contactModel = null;
-            ContactAddressDto? contactAddressDto = null;
-
 
             _fakeContactRepository.Setup(repo => repo.GetContactById(contactId))
                                     .ReturnsAsync(contactModel);
-
-            _fakeMapper.Setup(m => m.Map<ContactAddressDto>(contactModel))
-                        .Returns(contactAddressDto);
 
             // Act
             var result = await _contactService.GetContactById(contactId);
 
             // Assert
-            Assert.Equal(contactAddressDto, result);
+            Assert.Equal(contactModel, result);
             Assert.Null(result);
         }
 
@@ -326,6 +317,7 @@ namespace ContactHubApiTests.Services
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123213",
                 UserId = Guid.NewGuid()
             };
 
@@ -334,6 +326,7 @@ namespace ContactHubApiTests.Services
                 Id = contactId,
                 FirstName = contactCreationDto.FirstName,
                 LastName = contactCreationDto.LastName,
+                PhoneNumber = contactCreationDto.PhoneNumber,
                 Addresses = new List<Address>(),
                 UserId = contactCreationDto.UserId
             };
@@ -343,6 +336,7 @@ namespace ContactHubApiTests.Services
                 Id = contactModel.Id,
                 FirstName = contactModel.FirstName,
                 LastName = contactModel.LastName,
+                PhoneNumber = contactModel.PhoneNumber
             };
 
             _fakeMapper.Setup(m => m.Map<Contact>(contactCreationDto))

@@ -622,11 +622,13 @@ namespace ContactHubApiTests.Services
         public void GetCurrentUser_WithValidIdentity_ReturnsUserTokenDto()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var identity = new ClaimsIdentity(new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(ClaimTypes.GivenName, "John"),
                 new Claim(ClaimTypes.Surname, "Doe"),
-                new Claim(ClaimTypes.NameIdentifier, "johndoe123"),
+                new Claim("Username", "johndoe123"),
                 new Claim(ClaimTypes.Email, "john.doe@example.com")
             });
 
@@ -635,6 +637,7 @@ namespace ContactHubApiTests.Services
 
             // Assert
             Assert.NotNull(result);
+            Assert.Equal(userId, result.Id);
             Assert.Equal("John", result.FirstName);
             Assert.Equal("Doe", result.LastName);
             Assert.Equal("johndoe123", result.Username);

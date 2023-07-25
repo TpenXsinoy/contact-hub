@@ -1,6 +1,5 @@
 ﻿using ContactHubApi.Controllers;
 using ContactHubApi.Dtos.Addresses;
-using ContactHubApi.Dtos.Contacts;
 using ContactHubApi.Models;
 using ContactHubApi.Services.Addresses;
 using ContactHubApi.Services.Contacts;
@@ -44,7 +43,7 @@ namespace ContactHubApiTests.Controllers
             };
 
             _fakeContactService.Setup(service => service.GetContactById(addressCreationDto.ContactId))
-                               .ReturnsAsync(new ContactAddressDto());
+                               .ReturnsAsync(new Contact());
 
             _fakeAddressService.Setup(service => service.CreateAddress(addressCreationDto))
                                 .ReturnsAsync(new Address());
@@ -72,7 +71,7 @@ namespace ContactHubApiTests.Controllers
             };
 
             _fakeContactService.Setup(service => service.GetContactById(addressCreationDto.ContactId))
-                               .ReturnsAsync((ContactAddressDto?)null);
+                               .ReturnsAsync((Contact?)null);
 
             // Act
             var result = await _controller.CreateAddress(addressCreationDto);
@@ -122,7 +121,7 @@ namespace ContactHubApiTests.Controllers
             };
 
             _fakeContactService.Setup(service => service.GetContactById(addressCreationDto.ContactId))
-                               .ReturnsAsync(new ContactAddressDto());
+                               .ReturnsAsync(new Contact());
 
             _fakeAddressService.Setup(service => service.CreateAddress(addressCreationDto))
                                 .ThrowsAsync(new Exception());
@@ -205,7 +204,7 @@ namespace ContactHubApiTests.Controllers
             };
 
             _fakeContactService.Setup(service => service.GetContactById(addressCreationDto.ContactId))
-                               .ReturnsAsync(new ContactAddressDto());
+                               .ReturnsAsync(new Contact());
 
             _fakeAddressService.Setup(service => service.GetAddressById(addressId))
                                 .ReturnsAsync(new AddressDto());
@@ -238,7 +237,7 @@ namespace ContactHubApiTests.Controllers
             };
 
             _fakeContactService.Setup(service => service.GetContactById(addressCreationDto.ContactId))
-                               .ReturnsAsync((ContactAddressDto?)null);
+                               .ReturnsAsync((Contact?)null);
 
             // Act
             var result = await _controller.UpdateAddress(addressId, addressCreationDto);
@@ -292,7 +291,7 @@ namespace ContactHubApiTests.Controllers
             };
 
             _fakeContactService.Setup(service => service.GetContactById(addressCreationDto.ContactId))
-                               .ReturnsAsync(new ContactAddressDto());
+                               .ReturnsAsync(new Contact());
 
             _fakeAddressService.Setup(service => service.GetAddressById(addressId))
                                 .ThrowsAsync(new Exception());
@@ -322,7 +321,7 @@ namespace ContactHubApiTests.Controllers
             };
 
             _fakeContactService.Setup(service => service.GetContactById(addressCreationDto.ContactId))
-                               .ReturnsAsync(new ContactAddressDto());
+                               .ReturnsAsync(new Contact());
 
             _fakeAddressService.Setup(service => service.GetAddressById(addressId))
                                 .ReturnsAsync(new AddressDto());

@@ -4,6 +4,9 @@ namespace ContactHubApi.Dtos.Users
 {
     public class UserTokenDto
     {
+        [Required(ErrorMessage = "Id is required.")]
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "First Name is required.")]
         public string FirstName { get; set; } = string.Empty;
 
