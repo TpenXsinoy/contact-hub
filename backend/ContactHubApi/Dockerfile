@@ -5,7 +5,8 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-ENV ASPNETCORE_ENVIRONMENT=Development
+# Comment this out when building an image for production
+ENV ASPNETCORE_ENVIRONMENT=Development 
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
