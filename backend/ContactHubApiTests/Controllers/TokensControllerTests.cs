@@ -39,14 +39,21 @@ namespace ContactHubApiTests.Controllers
                 Password = "password",
             };
 
-            var user = new UserTokenDto
-            {
-                Username = "john_doe",
-                Email = "john.doe@example.com"
-            };
+            var user = new UserTokenDto();
 
-            _fakeUserService.Setup(service => service.GetUserByUsernameWithToken(userLoginDto.Username))
-                            .ReturnsAsync(new UserTokenDto());
+            _fakeUserService.Setup(service => service.GetUserByUsername(userLoginDto.Username))
+                            .ReturnsAsync(new UserUIDetailsDto()
+                            {
+                                Id = It.IsAny<Guid>(),
+                                FirstName = "test",
+                                LastName = "test",
+                                Username = "test",
+                                Email = "test@gmail.com"
+                            });
+
+            _fakeUserService.Setup(service => service.VerifyPasswordHash(userLoginDto.Password, It.IsAny<byte[]>(), It.IsAny<byte[]>()))
+                             .Returns(true);
+
 
             _fakeTokenService.Setup(service => service.CreateToken(user))
                             .Returns("token");
@@ -72,8 +79,8 @@ namespace ContactHubApiTests.Controllers
                 Password = "password",
             };
 
-            _fakeUserService.Setup(service => service.GetUserByUsernameWithToken(userLoginDto.Username))
-                            .ReturnsAsync((UserTokenDto?)null);
+            _fakeUserService.Setup(service => service.GetUserByUsername(userLoginDto.Username))
+                           .ReturnsAsync((UserUIDetailsDto?) null);
 
             // Act
             var result = await _controller.AcquireToken(userLoginDto);
@@ -81,6 +88,37 @@ namespace ContactHubApiTests.Controllers
             //Assert
             var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(result);
             Assert.Equal(404, notFoundObjectResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task AcquireToken_InvalidPassword_ReturnsBadRequest()
+        {
+            //Arrange
+            var userLoginDto = new UserLoginDto
+            {
+                Username = "john123",
+                Password = "password",
+            };
+
+            _fakeUserService.Setup(service => service.GetUserByUsername(userLoginDto.Username))
+                           .ReturnsAsync(new UserUIDetailsDto()
+                           {
+                               Id = It.IsAny<Guid>(),
+                               FirstName = "test",
+                               LastName = "test",
+                               Username = "test",
+                               Email = "test@gmail.com"
+                           });
+
+            _fakeUserService.Setup(service => service.VerifyPasswordHash(userLoginDto.Password, It.IsAny<byte[]>(), It.IsAny<byte[]>()))
+                             .Returns(false);
+
+            // Act
+            var result = await _controller.AcquireToken(userLoginDto);
+
+            //Assert
+            var badRequestObjectResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(400, badRequestObjectResult.StatusCode);
         }
 
         [Fact]
@@ -93,7 +131,7 @@ namespace ContactHubApiTests.Controllers
                 Password = "password",
             };
 
-            _fakeUserService.Setup(service => service.GetUserByUsernameWithToken(userLoginDto.Username))
+            _fakeUserService.Setup(service => service.GetUserByUsername(userLoginDto.Username))
                             .ThrowsAsync(new Exception());
 
             // Act
@@ -120,8 +158,18 @@ namespace ContactHubApiTests.Controllers
                 Email = "john.doe@example.com"
             };
 
-            _fakeUserService.Setup(service => service.GetUserByUsernameWithToken(userLoginDto.Username))
-                            .ReturnsAsync(new UserTokenDto());
+            _fakeUserService.Setup(service => service.GetUserByUsername(userLoginDto.Username))
+                           .ReturnsAsync(new UserUIDetailsDto()
+                           {
+                               Id = It.IsAny<Guid>(),
+                               FirstName = "test",
+                               LastName = "test",
+                               Username = "test",
+                               Email = "test@gmail.com"
+                           });
+
+            _fakeUserService.Setup(service => service.VerifyPasswordHash(userLoginDto.Password, It.IsAny<byte[]>(), It.IsAny<byte[]>()))
+                             .Returns(true);
 
             _fakeTokenService.Setup(service => service.CreateToken(user))
                             .Throws(new Exception());
@@ -150,8 +198,18 @@ namespace ContactHubApiTests.Controllers
                 Email = "john.doe@example.com"
             };
 
-            _fakeUserService.Setup(service => service.GetUserByUsernameWithToken(userLoginDto.Username))
-                            .ReturnsAsync(new UserTokenDto());
+            _fakeUserService.Setup(service => service.GetUserByUsername(userLoginDto.Username))
+                           .ReturnsAsync(new UserUIDetailsDto()
+                           {
+                               Id = It.IsAny<Guid>(),
+                               FirstName = "test",
+                               LastName = "test",
+                               Username = "test",
+                               Email = "test@gmail.com"
+                           });
+
+            _fakeUserService.Setup(service => service.VerifyPasswordHash(userLoginDto.Password, It.IsAny<byte[]>(), It.IsAny<byte[]>()))
+                             .Returns(true);
 
             _fakeTokenService.Setup(service => service.CreateToken(user))
                             .Returns("token");
@@ -168,7 +226,6 @@ namespace ContactHubApiTests.Controllers
         }
 
         // RenewToken Tests
-        // These tests will fail when running the test by clicking run tests in ContactHubApiTests project. But it will pass when running the test elsewhere.
         [Fact]
         public void RenewToken_TokenRenewed_ReturnsOk()
         {
