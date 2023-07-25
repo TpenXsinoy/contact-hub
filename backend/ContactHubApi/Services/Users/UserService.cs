@@ -113,12 +113,13 @@ namespace ContactHubApi.Services.Users
             if (identity != null)
             {
                 var userClaims = identity.Claims;
-            
+
                 return new UserTokenDto
                 {
+                    Id = Guid.Parse(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)!.Value),
                     FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)!.Value,
                     LastName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)!.Value,
-                    Username = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)!.Value,
+                    Username = userClaims.FirstOrDefault(o => o.Type == "Username")!.Value,
                     Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)!.Value,
                 };
             }
