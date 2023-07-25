@@ -18,6 +18,7 @@ import { useContact, useUpdateContact } from "src/hooks";
 import Preloader from "./Preloader";
 
 import styles from "./styles.module.scss";
+import { isValidPhoneNumber } from "src/utils/string";
 
 const validate = (values) => {
   const errors = {};
@@ -32,6 +33,12 @@ const validate = (values) => {
     errors.lastName = "This filed is required.";
   } else if (values.lastName.length > 50) {
     errors.lastName = "The maximum length of this field is 50 characters.";
+  }
+
+  if (!values.phoneNumber) {
+    errors.phoneNumber = "This filed is required.";
+  } else if (!isValidPhoneNumber(values.phoneNumber)) {
+    errors.phoneNumber = "Please enter a valid phone number.";
   }
 
   return errors;
@@ -64,11 +71,13 @@ const UpdateContact = () => {
             initialValues={{
               firstName: contact.firstName,
               lastName: contact.lastName,
+              phoneNumber: contact.phoneNumber,
             }}
             onSubmit={async (values, { setErrors }) => {
               const currentFormValues = {
                 firstName: values.firstName,
                 lastName: values.lastName,
+                phoneNumber: values.phoneNumber,
                 userId: user.id,
               };
 
@@ -123,6 +132,16 @@ const UpdateContact = () => {
                   value={values.lastName}
                   error={errors.lastName}
                   onChange={(e) => setFieldValue("lastName", e.target.value)}
+                />
+
+                <ControlledInput
+                  className={styles.UpdateContact_withMargin}
+                  name="phoneNumber"
+                  placeholder="Phone Number*"
+                  icon="call"
+                  value={values.phoneNumber}
+                  error={errors.phoneNumber}
+                  onChange={(e) => setFieldValue("phoneNumber", e.target.value)}
                 />
 
                 <div className={styles.UpdateContact_buttonGroup}>
