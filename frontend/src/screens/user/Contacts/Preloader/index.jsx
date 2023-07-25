@@ -8,11 +8,13 @@ const PreloaderContact = () => (
       <Shine className={styles.PreloaderContact_header_shine} />
       <Shine className={styles.PreloaderContact_header_shine} />
       <Shine className={styles.PreloaderContact_header_shine} />
+      <Shine className={styles.PreloaderContact_header_shine} />
     </div>
 
     <Separator className={styles.PreloaderContact_separator} />
 
     <div className={styles.PreloaderContact_body}>
+      <Shine className={styles.PreloaderContact_body_shine} />
       <Shine className={styles.PreloaderContact_body_shine} />
       <Shine className={styles.PreloaderContact_body_shine} />
       <Shine className={styles.PreloaderContact_body_shine} />

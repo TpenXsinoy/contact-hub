@@ -9,7 +9,7 @@
   &_header,
   &_body {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 
     @include breakpoint(sm) {
       grid-template-columns: 1fr;
