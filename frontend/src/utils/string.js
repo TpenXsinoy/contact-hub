@@ -12,6 +12,12 @@ export const isValidPassword = (password) => {
   return re.test(password);
 };
 
+// Checks if a phone number is valid
+export const isValidPhoneNumber = (phoneNumber) => {
+  const re = /^\d+$/;
+  return re.test(phoneNumber);
+};
+
 // Gets the username from an email address (everything before the @)
 export const getEmailUserName = (email) => {
   const parts = email.split("@");
