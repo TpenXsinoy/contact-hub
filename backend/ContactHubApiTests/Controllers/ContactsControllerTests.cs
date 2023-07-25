@@ -41,11 +41,31 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
+
             _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
                             .ReturnsAsync(new UserUIDetailsDto());
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier, contactCreationDto.UserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = contactCreationDto.UserId
+                            });
 
             _fakeContactService.Setup(service => service.CreateContact(contactCreationDto))
                                 .ReturnsAsync(new Contact());
@@ -66,6 +86,7 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
@@ -81,6 +102,92 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
+        public async Task CreateContact_UserWithDifferentId_ReturnsUnauthorized()
+        {
+            //Arrange
+            var contactCreationDto = new ContactCreationDto
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                PhoneNumber = "123456",
+                UserId = Guid.NewGuid()
+            };
+
+            var loggedInUserId = Guid.NewGuid();
+
+
+            _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
+                            .ReturnsAsync(new UserUIDetailsDto());
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier,loggedInUserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = loggedInUserId
+                            });
+
+            // Act
+            var result = await _controller.CreateContact(contactCreationDto);
+
+            //Assert
+            var unauthorizedObjectResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedObjectResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task CreateContact_UserNotAuthenticated_ReturnsUnauthorized()
+        {
+            //Arrange
+            var contactCreationDto = new ContactCreationDto
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                PhoneNumber = "123456",
+                UserId = Guid.NewGuid()
+            };
+
+            var loggedInUserId = Guid.NewGuid();
+
+
+            _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
+                            .ReturnsAsync(new UserUIDetailsDto());
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier,loggedInUserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns((UserTokenDto?)null);
+
+
+            // Act
+            var result = await _controller.CreateContact(contactCreationDto);
+
+            //Assert
+            var unauthorizedObjectResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedObjectResult.StatusCode);
+        }
+
+        [Fact]
         public async Task CreateContact_GetUserByIdServerError_ReturnsInternalServerError()
         {
             //Arrange
@@ -88,6 +195,7 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
@@ -110,6 +218,7 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
@@ -174,7 +283,7 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-             var username = "john.doe";
+            var username = "john.doe";
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
               {
@@ -187,7 +296,6 @@ namespace ContactHubApiTests.Controllers
             {
                 HttpContext = _fakeContext.Object
             };
-
 
             _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
                             .Returns((UserTokenDto?)null);
@@ -205,7 +313,7 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-             var username = "john.doe";
+            var username = "john.doe";
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
               {
@@ -244,7 +352,7 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-             var username = "john.doe";
+            var username = "john.doe";
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
               {
@@ -280,7 +388,7 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-             var username = "john.doe";
+            var username = "john.doe";
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
              {
@@ -316,7 +424,7 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var userId = It.IsAny<Guid>();
-             var username = "john.doe";
+            var username = "john.doe";
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
               {
@@ -356,9 +464,28 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var contacId = It.IsAny<Guid>();
+            var userId = It.IsAny<Guid>();
 
             _fakeContactService.Setup(service => service.GetContactById(contacId))
-                                .ReturnsAsync(new ContactAddressDto());
+                                .ReturnsAsync(new Contact());
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,userId.ToString())
+            }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = userId
+                            });
 
             // Act
             var result = await _controller.GetContact(contacId);
@@ -375,7 +502,7 @@ namespace ContactHubApiTests.Controllers
             var contacId = It.IsAny<Guid>();
 
             _fakeContactService.Setup(service => service.GetContactById(contacId))
-                                .ReturnsAsync((ContactAddressDto?)null);
+                                .ReturnsAsync((Contact?)null);
 
             // Act
             var result = await _controller.GetContact(contacId);
@@ -383,6 +510,80 @@ namespace ContactHubApiTests.Controllers
             //Assert
             var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(result);
             Assert.Equal(404, notFoundObjectResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetContact_GettingOtherUserContact_ReturnsUnauthorized()
+        {
+            //Arrange
+            var contacId = It.IsAny<Guid>();
+            var userId = Guid.NewGuid();
+            var loggedInUserId = Guid.NewGuid();
+
+            _fakeContactService.Setup(service => service.GetContactById(contacId))
+                                .ReturnsAsync(new Contact()
+                                {
+                                    UserId = userId,
+                                });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,loggedInUserId.ToString())
+            }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = loggedInUserId
+                            });
+
+            // Act
+            var result = await _controller.GetContact(contacId);
+
+            //Assert
+            var unauthorizedObjectResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedObjectResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetContact_UserNotAuthenticated_ReturnsUnauthorized()
+        {
+            //Arrange
+            var contacId = It.IsAny<Guid>();
+            var userId = Guid.NewGuid();
+            var loggedInUserId = Guid.NewGuid();
+
+            _fakeContactService.Setup(service => service.GetContactById(contacId))
+                                .ReturnsAsync(new Contact());
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,loggedInUserId.ToString())
+            }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns((UserTokenDto?)null);
+
+            // Act
+            var result = await _controller.GetContact(contacId);
+
+            //Assert
+            var unauthorizedObjectResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedObjectResult.StatusCode);
         }
 
         [Fact]
@@ -413,14 +614,36 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
             _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
-                            .ReturnsAsync(new UserUIDetailsDto());
+                            .ReturnsAsync(new UserUIDetailsDto()
+                            {
+                                Id = contactCreationDto.UserId
+                            });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier,contactCreationDto.UserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = contactCreationDto.UserId
+                            });
 
             _fakeContactService.Setup(service => service.GetContactById(contactId))
-                                .ReturnsAsync(new ContactAddressDto());
+                                .ReturnsAsync(new Contact());
 
             _fakeContactService.Setup(service => service.UpdateContact(contactId, contactCreationDto))
                                 .ReturnsAsync(new ContactDto());
@@ -443,6 +666,7 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
@@ -458,6 +682,97 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
+        public async Task UpdateContact_UserNotAuthenticated_ReturnsUnauthorized()
+        {
+            //Arrange
+            var contactId = It.IsAny<Guid>();
+
+            var contactCreationDto = new ContactCreationDto
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                PhoneNumber = "123456",
+                UserId = It.IsAny<Guid>()
+            };
+
+            _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
+                           .ReturnsAsync(new UserUIDetailsDto()
+                           {
+                               Id = contactCreationDto.UserId
+                           });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier,contactCreationDto.UserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns((UserTokenDto?)null);
+
+            // Act
+            var result = await _controller.UpdateContact(contactId, contactCreationDto);
+
+            //Assert
+            var unauthorizedResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdateContact_UpdateOtherUserContact_ReturnsUnauthorized()
+        {
+            //Arrange
+            var contactId = It.IsAny<Guid>();
+
+            var contactCreationDto = new ContactCreationDto
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                PhoneNumber = "123456",
+                UserId = Guid.NewGuid()
+            };
+
+            var loggedInUserId = Guid.NewGuid();
+
+            _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
+                           .ReturnsAsync(new UserUIDetailsDto()
+                           {
+                               Id = contactCreationDto.UserId
+                           });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier,contactCreationDto.UserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = loggedInUserId
+                            });
+
+            // Act
+            var result = await _controller.UpdateContact(contactId, contactCreationDto);
+
+            //Assert
+            var unauthorizedResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedResult.StatusCode);
+        }
+
+        [Fact]
         public async Task UpdateContact_ContactDoesNotExists_ReturnsNotFound()
         {
             //Arrange
@@ -467,14 +782,36 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
             _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
-                            .ReturnsAsync(new UserUIDetailsDto());
+                           .ReturnsAsync(new UserUIDetailsDto()
+                           {
+                               Id = contactCreationDto.UserId
+                           });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier,contactCreationDto.UserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = contactCreationDto.UserId
+                            });
 
             _fakeContactService.Setup(service => service.GetContactById(contactId))
-                                .ReturnsAsync((ContactAddressDto?)null);
+                                .ReturnsAsync((Contact?)null);
 
             // Act
             var result = await _controller.UpdateContact(contactId, contactCreationDto);
@@ -494,6 +831,7 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
@@ -518,11 +856,33 @@ namespace ContactHubApiTests.Controllers
             {
                 FirstName = "John",
                 LastName = "Doe",
+                PhoneNumber = "123456",
                 UserId = It.IsAny<Guid>()
             };
 
             _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
-                            .ReturnsAsync(new UserUIDetailsDto());
+                           .ReturnsAsync(new UserUIDetailsDto()
+                           {
+                               Id = contactCreationDto.UserId
+                           });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier,contactCreationDto.UserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = contactCreationDto.UserId
+                            });
 
             _fakeContactService.Setup(service => service.GetContactById(contactId))
                                 .ThrowsAsync(new Exception());
@@ -549,10 +909,31 @@ namespace ContactHubApiTests.Controllers
             };
 
             _fakeUserService.Setup(service => service.GetUserById(contactCreationDto.UserId))
-                            .ReturnsAsync(new UserUIDetailsDto());
+                           .ReturnsAsync(new UserUIDetailsDto()
+                           {
+                               Id = contactCreationDto.UserId
+                           });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+             {
+                new Claim(ClaimTypes.NameIdentifier,contactCreationDto.UserId.ToString())
+             }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = contactCreationDto.UserId
+                            });
 
             _fakeContactService.Setup(service => service.GetContactById(contactId))
-                                .ReturnsAsync(new ContactAddressDto());
+                                .ReturnsAsync(new Contact());
 
             _fakeContactService.Setup(service => service.UpdateContact(contactId, contactCreationDto))
                                 .ThrowsAsync(new Exception());
@@ -571,9 +952,31 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var contacId = It.IsAny<Guid>();
+            var userId = It.IsAny<Guid>();
 
             _fakeContactService.Setup(service => service.GetContactById(contacId))
-                                .ReturnsAsync(new ContactAddressDto());
+                                .ReturnsAsync(new Contact()
+                                {
+                                    UserId = userId
+                                });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+           {
+                new Claim(ClaimTypes.NameIdentifier,userId.ToString())
+           }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = userId
+                            });
 
             _fakeContactService.Setup(service => service.DeleteContact(contacId))
                                 .ReturnsAsync(true);
@@ -587,13 +990,87 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
+        public async Task DeleteContact_DeletingOtherUserContact_ReturnsUnauthorized()
+        {
+            //Arrange
+            var contacId = It.IsAny<Guid>();
+            var userId = Guid.NewGuid();
+            var loggedInUserId = Guid.NewGuid();
+
+            _fakeContactService.Setup(service => service.GetContactById(contacId))
+                                .ReturnsAsync(new Contact()
+                                {
+                                    UserId = userId,
+                                });
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,loggedInUserId.ToString())
+            }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = loggedInUserId
+                            });
+
+            // Act
+            var result = await _controller.DeleteContact(contacId);
+
+            //Assert
+            var unauthorizedObjectResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedObjectResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteContact_UserNotAuthenticated_ReturnsUnauthorized()
+        {
+            //Arrange
+            var contacId = It.IsAny<Guid>();
+            var userId = Guid.NewGuid();
+            var loggedInUserId = Guid.NewGuid();
+
+            _fakeContactService.Setup(service => service.GetContactById(contacId))
+                                .ReturnsAsync(new Contact());
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,loggedInUserId.ToString())
+            }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns((UserTokenDto?)null);
+
+            // Act
+            var result = await _controller.DeleteContact(contacId);
+
+            //Assert
+            var unauthorizedObjectResult = Assert.IsType<UnauthorizedResult>(result);
+            Assert.Equal(401, unauthorizedObjectResult.StatusCode);
+        }
+
+        [Fact]
         public async Task DeleteContact_ContactDoesNotExists_ReturnsNotFound()
         {
             //Arrange
             var contacId = It.IsAny<Guid>();
 
             _fakeContactService.Setup(service => service.GetContactById(contacId))
-                                .ReturnsAsync((ContactAddressDto?)null);
+                                .ReturnsAsync((Contact?)null);
 
             // Act
             var result = await _controller.DeleteContact(contacId);
@@ -625,10 +1102,31 @@ namespace ContactHubApiTests.Controllers
         {
             //Arrange
             var contacId = It.IsAny<Guid>();
+            var userId = It.IsAny<Guid>();
 
             _fakeContactService.Setup(service => service.GetContactById(contacId))
-                                .ReturnsAsync(new ContactAddressDto());
+                                .ReturnsAsync(new Contact()
+                                {
+                                    UserId = userId
+                                });
 
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+           {
+                new Claim(ClaimTypes.NameIdentifier,userId.ToString())
+           }));
+
+            _fakeContext.Setup(c => c.User).Returns(user);
+
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = _fakeContext.Object
+            };
+
+            _fakeUserService.Setup(service => service.GetCurrentUser(It.IsAny<ClaimsIdentity>()))
+                            .Returns(new UserTokenDto()
+                            {
+                                Id = userId
+                            });
             _fakeContactService.Setup(service => service.DeleteContact(contacId))
                                 .ThrowsAsync(new Exception());
 
