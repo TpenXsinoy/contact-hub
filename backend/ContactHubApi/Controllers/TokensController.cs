@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using ContactHubApi.Dtos.Tokens;
+﻿using ContactHubApi.Dtos.Tokens;
 using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
 using ContactHubApi.Services.Tokens;
@@ -38,8 +37,8 @@ namespace ContactHubApi.Controllers
         ///     
         ///     POST /api/tokens/acquire
         ///     {
-        ///         "username": "jhondoe",
-        ///         "password": "jhondoe123"
+        ///         "username": "john123",
+        ///         "password": "John123!"
         ///     }
         ///    
         /// </remarks>
@@ -59,12 +58,23 @@ namespace ContactHubApi.Controllers
         {
             try
             {
-                _user = await _userService.GetUserByUsernameWithToken(request.Username!);
+                var user = await _userService.GetUserByUsername(request.Username!);
 
-                if (_user == null)
+                if (user == null)
                 {
                     return NotFound($"User {request.Username} is not found");
                 }
+
+                if (!_userService.VerifyPasswordHash(request.Password!, user.PasswordHash, user.PasswordSalt))
+                {
+                    return BadRequest("Wrong password!");
+                }
+
+                _user.Id = user.Id;
+                _user.FirstName = user.FirstName;
+                _user.LastName = user.LastName;
+                _user.Username = user.Username;
+                _user.Email = user.Email;
 
                 string accessToken = _tokenService.CreateToken(_user!);
                 var refreshToken = _tokenService.GenerateRefreshToken();
