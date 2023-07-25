@@ -9,7 +9,6 @@ namespace ContactHubApi.Mappings
         public ContactMappings()
         {
             CreateMap<ContactCreationDto, Contact>();
-            CreateMap<Contact, ContactAddressDto>();
             CreateMap<Contact, ContactDto>();
         }
     }
