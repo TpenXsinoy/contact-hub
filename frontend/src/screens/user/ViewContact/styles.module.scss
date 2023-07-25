@@ -75,6 +75,13 @@
 
       &_details {
         margin-left: 24px;
+
+        &_subinfo {
+          color: $neutral-400;
+          @include flex-start;
+          gap: 8px;
+          margin-top: 8px;
+        }
       }
     }
 
