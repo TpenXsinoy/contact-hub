@@ -4,7 +4,7 @@ import { isLocal } from "../utils/destinations";
 let apiUrl = "https://contacthubapi.azurewebsites.net";
 
 if (isLocal) {
-  apiUrl = "https://localhost:7130";
+  apiUrl = "http://localhost:80";
 }
 
 const config = {
