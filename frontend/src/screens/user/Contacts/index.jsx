@@ -50,6 +50,7 @@ const Contacts = () => {
         >
           Hello! {user.firstName}
         </Text>
+
         <ButtonLink
           to={`/user/contacts/create`}
           type={buttonTypes.PRIMARY.VIOLET}
@@ -70,6 +71,7 @@ const Contacts = () => {
                 icon="person"
               />
             </div>
+
             <div className={styles.Contacts_userDetails_left_details}>
               <Text type={textTypes.HEADING.XS}>
                 {user.firstName} {user.lastName}
@@ -77,6 +79,7 @@ const Contacts = () => {
 
               <div className={styles.Contacts_userDetails_left_details_subinfo}>
                 <Icon icon="email" />
+
                 <Text
                   type={textTypes.BODY.MD}
                   colorClass={colorClasses.NEUTRAL["400"]}
@@ -95,6 +98,7 @@ const Contacts = () => {
                   icon="contacts"
                 />
               )}
+
               <Text
                 type={
                   windowSize.width <= 575
@@ -128,6 +132,7 @@ const Contacts = () => {
 
       <div className={styles.Contacts_withMargin}>
         <Text type={textTypes.HEADING.XS}>Contact List</Text>
+
         <ControlledInput
           className={styles.Contacts_withMargin_searchInput}
           placeholder="Search"
@@ -159,6 +164,7 @@ const Contacts = () => {
                 >
                   First Name
                 </div>
+
                 <div
                   className={cn(
                     styles.Contacts_grid_header,
@@ -167,6 +173,16 @@ const Contacts = () => {
                 >
                   Last Name
                 </div>
+
+                <div
+                  className={cn(
+                    styles.Contacts_grid_header,
+                    styles.Contacts_grid_column
+                  )}
+                >
+                  Contact Number
+                </div>
+
                 <div
                   className={cn(
                     styles.Contacts_grid_header,
@@ -180,56 +196,97 @@ const Contacts = () => {
               </div>
 
               {/* Body of ContactGrid starts here */}
-              {filteredContacts.map(({ id, firstName, lastName }) => (
-                <div className={styles.Contacts_grid_contactGrid} key={id}>
-                  {windowSize.width > 767 ? (
-                    <>
+              {filteredContacts.map(
+                ({ id, firstName, lastName, phoneNumber }) =>
+                  windowSize.width > 767 ? (
+                    // Desktop View
+                    <div className={styles.Contacts_grid_contactGrid} key={id}>
                       <div className={styles.Contacts_grid_column}>
                         {firstName}
                       </div>
+
                       <div className={styles.Contacts_grid_column}>
                         {lastName}
                       </div>
-                    </>
+
+                      <div className={styles.Contacts_grid_column}>
+                        {phoneNumber}
+                      </div>
+
+                      <div className={styles.Contacts_grid_column}>
+                        <div className={styles.Contacts_grid_buttons}>
+                          <IconLink
+                            to={`/user/contacts/${id}`}
+                            className={styles.Contacts_grid_viewButton}
+                            icon="visibility"
+                          />
+
+                          <IconLink
+                            to={`/user/contacts/${id}/update`}
+                            className={styles.Contacts_grid_editButton}
+                            icon="edit"
+                          />
+
+                          <IconButton
+                            className={styles.Contacts_grid_deleteButton}
+                            icon="highlight_off"
+                            onClick={() => setSelectedContactId(id)}
+                          />
+                        </div>
+                      </div>
+                    </div>
                   ) : (
-                    <div className={styles.Contacts_grid_info}>
-                      <Icon
-                        icon="contact_phone"
-                        className={styles.Contacts_grid_icon}
-                      />
+                    // Mobile View
+                    <details
+                      className={styles.Contacts_grid_contactGrid}
+                      key={id}
+                    >
+                      <summary className={styles.Contacts_grid_title}>
+                        <div className={styles.Contacts_grid_title_info}>
+                          <Icon
+                            icon="expand_more"
+                            className={styles.Contacts_grid_title_icon}
+                          />
 
-                      <Text
-                        className={styles.Contacts_grid_column}
-                        type={textTypes.HEADING.XS}
-                      >
-                        {firstName} {lastName}
-                      </Text>
-                    </div>
-                  )}
+                          <Text type={textTypes.HEADING.XS}>
+                            {firstName} {lastName}
+                          </Text>
+                        </div>
 
-                  <div className={styles.Contacts_grid_column}>
-                    <div className={styles.Contacts_grid_buttons}>
-                      <IconLink
-                        to={`/user/contacts/${id}`}
-                        className={styles.Contacts_grid_viewButton}
-                        icon="visibility"
-                      />
+                        <div className={styles.Contacts_grid_buttons}>
+                          <IconLink
+                            to={`/user/contacts/${id}`}
+                            className={styles.Contacts_grid_viewButton}
+                            icon="visibility"
+                          />
 
-                      <IconLink
-                        to={`/user/contacts/${id}/update`}
-                        className={styles.Contacts_grid_editButton}
-                        icon="edit"
-                      />
+                          <IconLink
+                            to={`/user/contacts/${id}/update`}
+                            className={styles.Contacts_grid_editButton}
+                            icon="edit"
+                          />
 
-                      <IconButton
-                        className={styles.Contacts_grid_deleteButton}
-                        icon="highlight_off"
-                        onClick={() => setSelectedContactId(id)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
+                          <IconButton
+                            className={styles.Contacts_grid_deleteButton}
+                            icon="highlight_off"
+                            onClick={() => setSelectedContactId(id)}
+                          />
+                        </div>
+                      </summary>
+
+                      <div className={styles.Contacts_grid_column}>
+                        <Text
+                          type={textTypes.HEADING.XXS}
+                          colorClass={colorClasses.NEUTRAL["400"]}
+                        >
+                          Contact Number:
+                        </Text>
+
+                        <Text type={textTypes.HEADING.XXS}>{phoneNumber}</Text>
+                      </div>
+                    </details>
+                  )
+              )}
               {/* Body of ContactGrid ends here */}
             </div>
           ) : (
