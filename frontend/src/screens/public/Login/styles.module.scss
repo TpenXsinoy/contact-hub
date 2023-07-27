@@ -43,6 +43,20 @@
       }
     }
 
+    &_forgotPassword {
+      color: $green-400;
+      display: block;
+      font-weight: 700;
+      margin-top: 20px;
+      text-align: left;
+      text-decoration: none;
+      width: max-content;
+
+      &:focus {
+        color: $green-200;
+      }
+    }
+
     &_buttonGroup {
       display: grid;
       grid-template-columns: 1fr 1fr;
