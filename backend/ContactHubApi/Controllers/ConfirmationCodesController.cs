@@ -111,7 +111,7 @@ namespace ContactHubApi.Controllers
             try
             {
                 var emailWithCode = _confirmationCodeService.GetConfirmationCodeWithEmail(_codeConfirmationDto);
-                
+
                 if (request.Email != emailWithCode.Email)
                 {
                     return BadRequest("Email does not match the registered email.");
