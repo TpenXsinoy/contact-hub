@@ -283,7 +283,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task GetUserById_UserDoesNotExists_ReturnsNotFound()
+        public async Task GetUserById_UserDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var userId = It.IsAny<Guid>();
@@ -335,7 +335,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task GetUserByUsername_UserDoesNotExists_ReturnsNotFound()
+        public async Task GetUserByUsername_UserDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var username = It.IsAny<string>();
@@ -405,7 +405,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task UpdateUser_UserDoesNotExists_ReturnsNotFound()
+        public async Task UpdateUser_UserDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var userId = It.IsAny<Guid>();

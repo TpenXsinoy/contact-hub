@@ -70,7 +70,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task AcquireToken_UserDoesNotExists_ReturnsNotFound()
+        public async Task AcquireToken_UserDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var userLoginDto = new UserLoginDto

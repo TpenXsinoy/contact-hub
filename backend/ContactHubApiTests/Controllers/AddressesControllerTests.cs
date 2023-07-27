@@ -57,7 +57,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task CreateAddress_ContactDoesNotExists_ReturnsNotFound()
+        public async Task CreateAddress_ContactDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var addressCreationDto = new AddressCreationDto
@@ -153,7 +153,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task GetAddress_AddressDoesNotExists_ReturnsNotFound()
+        public async Task GetAddress_AddressDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var addressId = It.IsAny<Guid>();
@@ -221,7 +221,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task UpdateAddress_ContactDoesNotExists_ReturnsNotFound()
+        public async Task UpdateAddress_ContactDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var addressId = It.IsAny<Guid>();
@@ -359,7 +359,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task DeleteAddress_AddressDoesNotExists_ReturnsNotFound()
+        public async Task DeleteAddress_AddressDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var addressId = It.IsAny<Guid>();
