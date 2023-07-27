@@ -6,6 +6,7 @@ using ContactHubApi.Repositories.Contacts;
 using ContactHubApi.Repositories.Users;
 using ContactHubApi.Services.Addresses;
 using ContactHubApi.Services.Contacts;
+using ContactHubApi.Services.ConfirmationCodes;
 using ContactHubApi.Services.Tokens;
 using ContactHubApi.Services.Users;
 using DotNetEnv;
@@ -121,6 +122,7 @@ void ConfigureServices(IServiceCollection services)
     services.AddScoped<IContactService, ContactService>();
     services.AddScoped<IAddressService, AddressService>();
     services.AddScoped<ITokenService, TokenService>();
+    services.AddScoped<IConfirmationCodeService, ConfirmationCodeService>();
 
     // Register Repos
     services.AddScoped<IUserRepository, UserRepository>();
