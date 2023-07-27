@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { forgotPasswordSteps } from "./constants";
 
-import InputUsernameEmailModal from "./InputUsernameEmailModal";
+import InputEmailModal from "./InputEmailModal";
 import InputConfirmationCodeModal from "./InputConfirmationCodeModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 import ForgotPasswordSuccessModal from "./ForgotPasswordSuccessModal";
@@ -15,7 +15,7 @@ const ForgotPasswordModals = ({ isOpen, handleClose }) => {
   return (
     <>
       {step === forgotPasswordSteps.INPUT_USERNAME_EMAIL && (
-        <InputUsernameEmailModal
+        <InputEmailModal
           isOpen={isOpen}
           handleClose={handleClose}
           handleSuccess={({ user }) => {
