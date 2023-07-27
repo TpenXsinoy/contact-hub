@@ -242,7 +242,7 @@ const ViewContact = () => {
                       </div>
 
                       <div className={styles.ViewContact_grid_column}>
-                        {street}
+                        {street ? street : "-"}
                       </div>
 
                       <div className={styles.ViewContact_grid_column}>
@@ -250,7 +250,7 @@ const ViewContact = () => {
                       </div>
 
                       <div className={styles.ViewContact_grid_column}>
-                        {state}
+                        {state ? state : "-"}
                       </div>
 
                       <div className={styles.ViewContact_grid_column}>

@@ -36,11 +36,14 @@ namespace ContactHubApiTests.Dtos
         [InlineData("John", "Doe", "notanemail", "johndoe123", "password123", "Email is invalid.")]
         [InlineData("John", "Doe", "john.doe@example.com", "", "password123", "Username is required.")]
         [InlineData("John", "Doe", "john.doe@example.com", "johndoe123", "", "Password is required.")]
-        [InlineData("JohnTooLongFirstNameTooLongFirstNameTooLongFirstNameTooLong", "Doe", "john.doe@example.com", "johndoe123", "password123", "Maximum lenghth for the first name is 50 characters.")]
-        [InlineData("John", "TooLongLastNameTooLongLastNameTooLongLastNameTooLongLastName", "john.doe@example.com", "johndoe123", "password123", "Maximum lenghth for the last name is 50 characters.")]
-        [InlineData("John", "Doe", "john.doe@example.com", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "password123", "Maximum lenghth for the username is 50 characters.")]
-        [InlineData("John", "Doe", "john.doe@example.com", "johndoe123", "password123TooLongPasswordTooLongPasswordTooLongpassword123TooLongPasswordTooLongPasswordTooLong", "Maximum lenghth for the password is 50 characters.")]
+        [InlineData("JohnTooLongFirstNameTooLongFirstNameTooLongFirstNameTooLong", "Doe", "john.doe@example.com", "johndoe123", "password123", "Maximum length for the first name is 50 characters.")]
+        [InlineData("John", "TooLongLastNameTooLongLastNameTooLongLastNameTooLongLastName", "john.doe@example.com", "johndoe123", "password123", "Maximum length for the last name is 50 characters.")]
+        [InlineData("John", "Doe", "john.doe@example.com", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "password123", "Maximum length for the username is 50 characters.")]
+        [InlineData("John", "Doe", "john.doe@example.com", "johndoe123", "password123TooLongPasswordTooLongPasswordTooLongpassword123TooLongPasswordTooLongPasswordTooLong", "Maximum length for the password is 50 characters.")]
         [InlineData("John", "Doe", "john.doe@example.com", "johndoe123", "weak", "The password field must have at least 8 characters, at least 1 numeric, at least 1 lowercase, at least 1 uppercase, and at least 1 special character.")]
+        [InlineData("L", "Doe", "john.doe@example.com", "johndoe123", "password123", "Minimum length for the first name is 2 characters.")]
+        [InlineData("John", "D", "john.doe@example.com", "johndoe123", "password123", "Minimum length for the last name is 2 characters.")]
+        [InlineData("John", "Doe", "john.doe@example.com", "user", "password123", "Minimum length for the username is 5 characters.")]
         public void InvalidUserCreationDto_ValidationErrors(string firstName, string lastName, string email,
                                                             string username, string password, string expectedErrorMessage)
         {

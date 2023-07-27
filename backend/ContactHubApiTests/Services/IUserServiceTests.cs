@@ -283,81 +283,84 @@ namespace ContactHubApiTests.Services
             Assert.Equal("Database connection error", result.Message);
         }
 
-        // GetUserByUsernameWithToken Tests
+        // GetUserByEmail Tests
         [Fact]
-        public async void GetUserByUsernameWithToken_HasUser_ReturnsUser()
+        public async void GetUserByEmail_HasUser_ReturnsUser()
         {
             // Arrange
-            var username = "john123";
+            var email = "john.doe@gmail.com";
 
             var userModel = new User
             {
                 Id = It.IsAny<Guid>(),
                 FirstName = "John",
                 LastName = "Doe",
-                Email = "john.doe@gmail.com",
-                Username = username,
+                Email = email,
+                Username = "john123",
                 PasswordHash = Array.Empty<byte>(),
                 PasswordSalt = Array.Empty<byte>(),
                 Contacts = new List<Contact>()
             };
 
-            var userTokenDto = new UserTokenDto
+            var userUIDetailsDto = new UserUIDetailsDto
             {
+                Id = userModel.Id,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
                 Email = userModel.Email,
                 Username = userModel.Username,
-                TokenCreated = DateTime.UtcNow,
-                TokenExpires = DateTime.UtcNow.AddMinutes(30),
+                PasswordHash = userModel.PasswordHash,
+                PasswordSalt = userModel.PasswordSalt
             };
 
-            _fakeUserRepository.Setup(repo => repo.GetUserByUsername(username))
+            _fakeUserRepository.Setup(repo => repo.GetUserByEmail(email))
                                 .ReturnsAsync(userModel);
 
-            _fakeMapper.Setup(m => m.Map<UserTokenDto>(userModel))
-                        .Returns(userTokenDto);
+            _fakeMapper.Setup(m => m.Map<UserUIDetailsDto>(userModel))
+                        .Returns(userUIDetailsDto);
 
             // Act
-            var result = await _userService.GetUserByUsernameWithToken(username);
+            var result = await _userService.GetUserByEmail(email);
 
             // Assert
-            Assert.Equal(userTokenDto, result);
+            Assert.Equal(userUIDetailsDto, result);
             Assert.NotNull(result);
-            Assert.IsType<UserTokenDto>(result);
+            Assert.IsType<UserUIDetailsDto>(result);
         }
 
         [Fact]
-        public async void GetUserByUsernameWithToken_UserNotFound_ReturnsNull()
+        public async void GetUserByEmail_UserNotFound_ReturnsNull()
         {
             // Arrange
-            var username = "john123";
+            var email = "john.doe@gmail.com";
             User? userModel = null;
-            UserTokenDto? userTokenDto = null;
+            UserUIDetailsDto? userUIDetailsDto = null;
 
-            _fakeUserRepository.Setup(repo => repo.GetUserByUsername(username))
+            _fakeUserRepository.Setup(repo => repo.GetUserByEmail(email))
                                 .ReturnsAsync(userModel);
 
-            _fakeMapper.Setup(m => m.Map<UserTokenDto?>(userModel))
-                        .Returns(userTokenDto);
+            _fakeMapper.Setup(m => m.Map<UserUIDetailsDto?>(userModel))
+                        .Returns(userUIDetailsDto);
 
             // Act
-            var result = await _userService.GetUserByUsernameWithToken(username);
+            var result = await _userService.GetUserByEmail(email);
 
             // Assert
-            Assert.Equal(userTokenDto, result);
+            Assert.Equal(userUIDetailsDto, result);
             Assert.Null(result);
         }
 
         [Fact]
-        public async void GetUserByUsernameWithToken_ConnectionError_ThrowsException()
+        public async void GetUserByEmail_ConnectionError_ThrowsException()
         {
             // Arrange
-            var username = "john123";
+            var email = "john.doe@gmail.com";
 
-            _fakeUserRepository.Setup(repo => repo.GetUserByUsername(username))
+            _fakeUserRepository.Setup(repo => repo.GetUserByEmail(email))
                                 .Throws(new Exception("Database connection error"));
 
             // Act
-            var result = await Assert.ThrowsAsync<Exception>(() => _userService.GetUserByUsernameWithToken(username));
+            var result = await Assert.ThrowsAsync<Exception>(() => _userService.GetUserByEmail(email));
 
             // Assert
             Assert.Equal("Database connection error", result.Message);

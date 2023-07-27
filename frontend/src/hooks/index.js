@@ -4,6 +4,7 @@ export { default as useContact } from "./useContact";
 export { default as useContacts } from "./useContacts";
 export { default as useCreateAddress } from "./useCreateAddress";
 export { default as useCreateContact } from "./useCreateContact";
+export { default as useInterval } from "./useInterval";
 export { default as useOnClickOutside } from "./useOnClickOutside";
 export { default as useUpdateAddress } from "./useUpdateAddress";
 export { default as useUpdateContact } from "./useUpdateContact";

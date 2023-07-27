@@ -45,7 +45,7 @@ namespace ContactHubApi.Controllers
         ///     }
         /// 
         /// </remarks>
-        /// <response code="201">Successfully created am address</response>
+        /// <response code="201">Successfully created an address</response>
         /// <response code="400">Address details are invalid</response>
         /// <response code="401">User is not authorized to use this endpoint</response>
         /// <response code="404">Contact is not found</response>

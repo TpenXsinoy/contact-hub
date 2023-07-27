@@ -39,24 +39,32 @@ const SignUp = () => {
       errors.firstName = "This field is required.";
     } else if (values.firstName.length > 50) {
       errors.firstName = "The maximum length of this field is 50 characters.";
+    } else if (values.firstName.length < 2) {
+      errors.firstName = "The minimum length of this field is two characters.";
     }
 
     if (!values.lastName) {
       errors.lastName = "This field is required.";
     } else if (values.lastName.length > 50) {
       errors.lastName = "The maximum length of this field is 50 characters.";
+    } else if (values.lastName.length < 2) {
+      errors.lastName = "The minimum length of this field is two characters.";
     }
 
     if (!values.email) {
       errors.email = "This field is required.";
     } else if (!isValidEmail(values.email)) {
       errors.email = "This must be a valid email address.";
+    } else if (values.email.length > 50) {
+      errors.email = "The maximum length of this field is 50 characters.";
     }
 
     if (!values.username) {
       errors.username = "This field is required.";
     } else if (values.username.length > 50) {
       errors.username = "The maximum length of this field is 50 characters.";
+    } else if (values.username.length < 5) {
+      errors.username = "The minimum length of this field is five characters.";
     }
 
     if (!values.password) {

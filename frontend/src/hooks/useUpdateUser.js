@@ -7,25 +7,33 @@ const useUpdateUser = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isVerifyingPassword, setIsVerifyingPassword] = useState(false);
 
-  const updateUser = async (userId, userTobeUpdated, oldPassword = null) => {
+  const updateUser = async (
+    userId,
+    userTobeUpdated,
+    oldPassword = null,
+    isForgotPassword = false
+  ) => {
     setIsUpdating(true);
 
     let responseCode;
     let responseData;
     const errors = {};
     try {
-      setIsVerifyingPassword(true);
+      if (!isForgotPassword) {
+        setIsVerifyingPassword(true);
 
-      // Call the login API to verify if the password is correct
-      await UsersService.login({
-        username: user.username,
-        password: oldPassword || userTobeUpdated.password,
-      });
+        // Call the login API to verify if the password is correct
+        await UsersService.login({
+          username: user.username,
+          password: oldPassword || userTobeUpdated.password,
+        });
 
-      setIsVerifyingPassword(false);
+        setIsVerifyingPassword(false);
+      }
 
       // If the password is correct, call the API to update the user
       const response = await UsersService.update(userId, userTobeUpdated);
+
       responseCode = response.status;
     } catch (error) {
       responseData = error.response.data;

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ContactHubApi.Dtos.Addresses;
-using ContactHubApi.Dtos.Contacts;
 using ContactHubApi.Models;
 using ContactHubApi.Repositories.Addresses;
 using ContactHubApi.Services.Addresses;

@@ -79,7 +79,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task CreateContact_UserDoesNotExists_ReturnsNotFound()
+        public async Task CreateContact_UserDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var contactCreationDto = new ContactCreationDto
@@ -348,7 +348,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task GetAllContacts_UserDoesNotExists_ReturnsNotFound()
+        public async Task GetAllContacts_UserDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var userId = It.IsAny<Guid>();
@@ -496,7 +496,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task GetContact_ContactDoesNotExists_ReturnsNotFound()
+        public async Task GetContact_ContactDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var contacId = It.IsAny<Guid>();
@@ -657,7 +657,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task UpdateContact_UserDoesNotExists_ReturnsNotFound()
+        public async Task UpdateContact_UserDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var contactId = It.IsAny<Guid>();
@@ -773,7 +773,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task UpdateContact_ContactDoesNotExists_ReturnsNotFound()
+        public async Task UpdateContact_ContactDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var contactId = It.IsAny<Guid>();
@@ -1064,7 +1064,7 @@ namespace ContactHubApiTests.Controllers
         }
 
         [Fact]
-        public async Task DeleteContact_ContactDoesNotExists_ReturnsNotFound()
+        public async Task DeleteContact_ContactDoesNotExist_ReturnsNotFound()
         {
             //Arrange
             var contacId = It.IsAny<Guid>();

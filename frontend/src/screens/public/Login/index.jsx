@@ -25,6 +25,8 @@ import { UserContext } from "src/contexts";
 import { UsersService, TokensService } from "src/services";
 import Logo from "src/assets/images/Logo/logo.png";
 
+import ForgotPasswordModals from "./ForgotPasswordModals";
+
 import styles from "./styles.module.scss";
 
 const validate = (values) => {
@@ -45,6 +47,7 @@ const Login = () => {
   const { loginUpdate } = useContext(UserContext);
   const cookies = new Cookies();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isForgotPasswordToggled, toggleIsForgotPassword] = useState(false);
 
   return (
     <>
@@ -169,6 +172,14 @@ const Login = () => {
                   </Text>
                 )}
 
+                <Button
+                  type={buttonTypes.TEXT.GREEN}
+                  className={styles.Login_content_forgotPassword}
+                  onClick={() => toggleIsForgotPassword(true)}
+                >
+                  Forgot Password?
+                </Button>
+
                 <div className={styles.Login_content_buttonGroup}>
                   <Button
                     kind={buttonKinds.SUBMIT}
@@ -204,6 +215,13 @@ const Login = () => {
           </Formik>
         </div>
       </Card>
+
+      {isForgotPasswordToggled && (
+        <ForgotPasswordModals
+          isOpen={isForgotPasswordToggled}
+          handleClose={() => toggleIsForgotPassword(false)}
+        />
+      )}
     </>
   );
 };

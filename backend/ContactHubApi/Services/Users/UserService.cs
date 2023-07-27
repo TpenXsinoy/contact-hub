@@ -56,15 +56,15 @@ namespace ContactHubApi.Services.Users
             return _mapper.Map<UserUIDetailsDto>(userModel);
         }
 
-        public async Task<UserTokenDto?> GetUserByUsernameWithToken(string username)
+        public async Task<UserUIDetailsDto?> GetUserByEmail(string email)
         {
-            var userModel = await _userRepository.GetUserByUsername(username);
+            var userModel = await _userRepository.GetUserByEmail(email);
             if (userModel == null)
             {
                 return null;
             }
 
-            return _mapper.Map<UserTokenDto>(userModel);
+            return _mapper.Map<UserUIDetailsDto>(userModel);
         }
 
         public async Task<bool> IsUserEmailExist(string email)

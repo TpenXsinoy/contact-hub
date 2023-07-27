@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using ContactHubApi.Dtos.Addresses;
-using ContactHubApi.Dtos.Users;
 
 namespace ContactHubApiTests.Dtos
 {
@@ -39,15 +33,16 @@ namespace ContactHubApiTests.Dtos
 
         [Theory]
         [InlineData("", "123 Main St", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Address Type is required.")]
-        [InlineData("Home", "", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Street is required.")]
         [InlineData("Home", "123 Main St", "", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "City is required.")]
-        [InlineData("Home", "123 Main St", "City", "", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "State is required.")]
         [InlineData("Home", "123 Main St", "City", "State", "", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Postal Code is required.")]
-        [InlineData("johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "123 Main St", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum lenghth for the address type is 50 characters.")]
-        [InlineData("Home", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum lenghth for the street is 100 characters.")]
-        [InlineData("Home", "123 Main St", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum lenghth for the city is 50 characters.")]
-        [InlineData("Home", "123 Main St", "City", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum lenghth for the state is 50 characters.")]
-        [InlineData("Home", "123 Main St", "City", "State", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum lenghth for the postal code is 50 characters.")]
+        [InlineData("johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "123 Main St", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the address type is 50 characters.")]
+        [InlineData("Home", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the street is 100 characters.")]
+        [InlineData("Home", "123 Main St", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the city is 50 characters.")]
+        [InlineData("Home", "123 Main St", "City", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the state is 50 characters.")]
+        [InlineData("Home", "123 Main St", "City", "State", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the postal code is 50 characters.")]
+        [InlineData("ss", "123 Main St", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the address type is 3 characters.")]
+        [InlineData("Home", "123 Main St", "d", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the city is 2 characters.")]
+        [InlineData("Home", "123 Main St", "City", "State", "s", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the postal code is 2 characters.")]
         public void InvalidAddressCreationDto_ValidationErrors(string addressType, string street, string city,
                                                             string state, string postalCode, Guid contactId, string expectedErrorMessage)
         {
