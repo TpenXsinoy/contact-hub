@@ -48,7 +48,6 @@ namespace ContactHubApi.Controllers
         /// <response code="404">User is not found</response>
         /// <response code="500">Internal server error</response>.
         [HttpPost("send")]
-        [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Address), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
