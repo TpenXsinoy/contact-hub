@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContactHubApi.Dtos.Addresses;
+﻿using System.ComponentModel.DataAnnotations;
 using ContactHubApi.Dtos.Email;
-using ContactHubApi.Dtos.Users;
 
 namespace ContactHubApiTests.DtoValidations
 {
