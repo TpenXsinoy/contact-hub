@@ -41,6 +41,9 @@ namespace ContactHubApiTests.Dtos
         [InlineData("John", "Doe", "john.doe@example.com", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "password123", "Maximum lenghth for the username is 50 characters.")]
         [InlineData("John", "Doe", "john.doe@example.com", "johndoe123", "password123TooLongPasswordTooLongPasswordTooLongpassword123TooLongPasswordTooLongPasswordTooLong", "Maximum lenghth for the password is 50 characters.")]
         [InlineData("John", "Doe", "john.doe@example.com", "johndoe123", "weak", "The password field must have at least 8 characters, at least 1 numeric, at least 1 lowercase, at least 1 uppercase, and at least 1 special character.")]
+        [InlineData("L", "Doe", "john.doe@example.com", "johndoe123", "password123", "Minimum lenghth for the first name is 2 characters.")]
+        [InlineData("John", "D", "john.doe@example.com", "johndoe123", "password123", "Minimum lenghth for the last name is 2 characters.")]
+        [InlineData("John", "Doe", "john.doe@example.com", "user", "password123", "Minimum lenghth for the username is 5 characters.")]
         public void InvalidUserCreationDto_ValidationErrors(string firstName, string lastName, string email,
                                                             string username, string password, string expectedErrorMessage)
         {
