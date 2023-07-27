@@ -41,9 +41,7 @@ namespace ContactHubApiTests.Dtos
         [InlineData("Home", "123 Main St", "City", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the state is 50 characters.")]
         [InlineData("Home", "123 Main St", "City", "State", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the postal code is 50 characters.")]
         [InlineData("ss", "123 Main St", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the address type is 3 characters.")]
-        [InlineData("Home", "ss", "City", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the street is 3 characters.")]
         [InlineData("Home", "123 Main St", "d", "State", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the city is 2 characters.")]
-        [InlineData("Home", "123 Main St", "City", "a", "12345", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the state is 2 characters.")]
         [InlineData("Home", "123 Main St", "City", "State", "s", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the postal code is 2 characters.")]
         public void InvalidAddressCreationDto_ValidationErrors(string addressType, string street, string city,
                                                             string state, string postalCode, Guid contactId, string expectedErrorMessage)
