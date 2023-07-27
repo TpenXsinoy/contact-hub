@@ -27,18 +27,24 @@ const validate = (values) => {
     errors.firstName = "This field is required.";
   } else if (values.firstName.length > 50) {
     errors.firstName = "The maximum length of this field is 50 characters.";
+  } else if (values.firstName.length < 2) {
+    errors.firstName = "The minimum length of this field is two characters.";
   }
 
   if (!values.lastName) {
     errors.lastName = "This filed is required.";
   } else if (values.lastName.length > 50) {
     errors.lastName = "The maximum length of this field is 50 characters.";
+  } else if (values.lastName.length < 2) {
+    errors.lastName = "The minimum length of this field is two characters.";
   }
 
   if (!values.phoneNumber) {
     errors.phoneNumber = "This filed is required.";
   } else if (!isValidPhoneNumber(values.phoneNumber)) {
     errors.phoneNumber = "Please enter a valid phone number.";
+  } else if (values.phoneNumber.length < 5) {
+    errors.phoneNumber = "The minimum length of this field is five characters.";
   }
 
   return errors;

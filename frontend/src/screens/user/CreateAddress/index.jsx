@@ -23,11 +23,12 @@ const validate = (values) => {
     errors.addressType = "This field is required.";
   } else if (values.addressType.length > 50) {
     errors.addressType = "The maximum length of this field is 50 characters.";
+  } else if (values.addressType.length < 3) {
+    errors.addressType =
+      "The minimum length of this field is three characters.";
   }
 
-  if (!values.street) {
-    errors.street = "This filed is required.";
-  } else if (values.street.length > 100) {
+  if (values.street.length > 100) {
     errors.street = "The maximum length of this field is 100 characters.";
   }
 
@@ -35,11 +36,11 @@ const validate = (values) => {
     errors.city = "This filed is required.";
   } else if (values.city.length > 50) {
     errors.city = "The maximum length of this field is 50 characters.";
+  } else if (values.city.length < 2) {
+    errors.city = "The minimum length of this field is two characters.";
   }
 
-  if (!values.state) {
-    errors.state = "This filed is required.";
-  } else if (values.state.length > 50) {
+  if (values.state.length > 50) {
     errors.state = "The maximum length of this field is 50 characters.";
   }
 
@@ -47,6 +48,8 @@ const validate = (values) => {
     errors.postalCode = "This filed is required.";
   } else if (values.postalCode.length > 50) {
     errors.postalCode = "The maximum length of this field is 50 characters.";
+  } else if (values.postalCode.length < 2) {
+    errors.postalCode = "The minimum length of this field is two characters.";
   }
 
   return errors;
@@ -146,7 +149,7 @@ const CreateAddress = () => {
               <ControlledInput
                 className={styles.CreateAddress_withMargin}
                 name="street"
-                placeholder="Street*"
+                placeholder="Street"
                 icon="add_road"
                 value={values.street}
                 error={errors.street}
@@ -166,7 +169,7 @@ const CreateAddress = () => {
               <ControlledInput
                 className={styles.CreateAddress_withMargin}
                 name="state"
-                placeholder="State*"
+                placeholder="State"
                 icon="explore"
                 value={values.state}
                 error={errors.state}
