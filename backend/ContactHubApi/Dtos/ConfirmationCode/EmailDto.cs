@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ContactHubApi.Dtos.Email
+namespace ContactHubApi.Dtos.ConfirmationCode
 {
     public class EmailDto
     {

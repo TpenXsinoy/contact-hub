@@ -70,7 +70,7 @@ namespace ContactHubApi.Controllers
                     return BadRequest("Wrong password!");
                 }
 
-                _user.Id = user.Id;
+                _user!.Id = user.Id;
                 _user.FirstName = user.FirstName;
                 _user.LastName = user.LastName;
                 _user.Username = user.Username;

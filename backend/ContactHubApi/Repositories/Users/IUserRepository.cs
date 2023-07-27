@@ -26,10 +26,9 @@ namespace ContactHubApi.Repositories.Users
         Task<User?> GetUserByUsername(string username);
 
         /// <summary>
-
         /// Gets a user by email
         /// </summary>
-        /// <param name="username">Email of a user</param>
+        /// <param name="email">Email of a user</param>
         /// <returns>User with email the same as the param</returns>
         Task<User?> GetUserByEmail(string email);
 

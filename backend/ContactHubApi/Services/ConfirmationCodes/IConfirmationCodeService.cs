@@ -1,6 +1,6 @@
-﻿using ContactHubApi.Dtos.Email;
+﻿using ContactHubApi.Dtos.ConfirmationCode;
 
-namespace ContactHubApi.Services.Email
+namespace ContactHubApi.Services.ConfirmationCodes
 {
     public interface IConfirmationCodeService
     {

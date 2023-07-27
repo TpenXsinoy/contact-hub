@@ -1,7 +1,7 @@
-﻿using ContactHubApi.Dtos.Email;
+﻿using ContactHubApi.Dtos.ConfirmationCode;
 using ContactHubApi.Dtos.Users;
 using ContactHubApi.Models;
-using ContactHubApi.Services.Email;
+using ContactHubApi.Services.ConfirmationCodes;
 using ContactHubApi.Services.Tokens;
 using ContactHubApi.Services.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -125,7 +125,7 @@ namespace ContactHubApi.Controllers
 
                 var userTokenDto = new UserTokenDto
                 {
-                    Id = user.Id,
+                    Id = user!.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Username = user.Username,

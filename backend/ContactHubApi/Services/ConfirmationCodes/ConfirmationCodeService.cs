@@ -1,8 +1,8 @@
 ﻿ using System.Net;
 using System.Net.Mail;
-using ContactHubApi.Dtos.Email;
+using ContactHubApi.Dtos.ConfirmationCode;
 
-namespace ContactHubApi.Services.Email
+namespace ContactHubApi.Services.ConfirmationCodes
 {
     public class ConfirmationCodeService : IConfirmationCodeService
     {
