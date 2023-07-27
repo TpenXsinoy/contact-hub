@@ -10,7 +10,6 @@ namespace ContactHubApi.Dtos.Addresses
         public string AddressType { get; set; } = string.Empty;
 
         [MaxLength(100, ErrorMessage = "Maximum length for the street is 100 characters.")]
-        [MinLength(3, ErrorMessage = "Minimum length for the street is 3 characters.")]
         public string Street { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "City is required.")]
@@ -19,7 +18,6 @@ namespace ContactHubApi.Dtos.Addresses
         public string City { get; set; } = string.Empty;
 
         [MaxLength(50, ErrorMessage = "Maximum length for the state is 50 characters.")]
-        [MinLength(2, ErrorMessage = "Minimum length for the state is 2 characters.")]
         public string State { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Postal Code is required.")]
