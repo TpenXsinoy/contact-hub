@@ -69,7 +69,7 @@ namespace ContactHubApi.Controllers
                     return NotFound($"User with ID {request.UserId} is not found");
                 }
 
-                ClaimsIdentity? identity  = HttpContext.User.Identity as ClaimsIdentity;
+                ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
 
                 var loggedInUser = _userService.GetCurrentUser(identity);
 

@@ -31,6 +31,11 @@ namespace ContactHubApi.Repositories.Users
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
+        public async Task<User?> GetUserByEmail(string email)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
         public Task<bool> IsUserEmailExist(string email)
         {
             return _dbContext.Users.AnyAsync(u => u.Email == email);
