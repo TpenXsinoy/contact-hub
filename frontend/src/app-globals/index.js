@@ -1,3 +1,4 @@
+export { default as buttonGroupDirections } from "./buttonGroupDirections";
 export { default as buttonKinds } from "./buttonKinds";
 export { default as buttonTypes } from "./buttonTypes";
 export { default as colorClasses } from "./colorClasses";
@@ -6,6 +7,8 @@ export { default as gridTypes } from "./gridTypes";
 export { default as iconButtonTypes } from "./iconButtonTypes";
 export { default as inputKinds } from "./inputKinds";
 export { default as inputTypes } from "./inputTypes";
+export { default as modalSizes } from "./modalSizes";
+export { default as modalPositions } from "./modalPositions";
 export { default as shineTypes } from "./shineTypes";
 export { default as spinnerSizes } from "./spinnerSizes";
 export { default as tabKinds } from "./tabKinds";

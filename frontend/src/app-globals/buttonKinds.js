@@ -1,7 +1,7 @@
 export const BUTTON_KINDS = {
-  BUTTON: 'button',
-  SUBMIT: 'submit',
-  RESET: 'reset',
+  BUTTON: "button",
+  SUBMIT: "submit",
+  RESET: "reset",
 };
 
 export default BUTTON_KINDS;
