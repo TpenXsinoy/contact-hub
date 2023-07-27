@@ -4,7 +4,7 @@
 
 ### Visit the website at [Contact Hub](https://contacthubapp.azurewebsites.net/login)
 
-**Note:** The website may take some time to load as it is hosted on a free tier of Azure.
+**Note:** The website may take some time to load and can only be accessed 60 minutes per day as it is hosted on a free tier of Azure.
 
 # Starting the Application with Docker
 
