@@ -8,11 +8,15 @@ https://contacthubapicontainer.azurewebsites.net/swagger/index.html
 
 # User Endpoints
 
-![Use Endpoints](Static/UserEndpoints.PNG)
+![User Endpoints](Static/UserEndpoints.PNG)
 
 # Token Endpoints
 
 ![Token Endpoints](Static/TokenEndpoints.PNG)
+
+# Confirmation Codes Endpoints
+
+![Confirmation Codes Endpoints](Static/ConfirmationCodesEndpoints.PNG)
 
 # Contact Endpoints
 
@@ -21,3 +25,11 @@ https://contacthubapicontainer.azurewebsites.net/swagger/index.html
 # Address Endpoints
 
 ![Address Endpoints](Static/AddressEndpoints.PNG)
+
+# Authorization
+
+Input `Bearer <token>` in order to access the endpoints that needs authorization.
+
+The token can be retrieved from the `POST /api/tokens/acquire` endpoint.
+
+![Address Endpoints](Static/Authorization.PNG)
