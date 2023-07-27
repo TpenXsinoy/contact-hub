@@ -32,10 +32,13 @@ namespace ContactHubApiTests.Dtos
 
         [Theory]
         [InlineData("", "doe", "1234567890", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "First name is required.")]
-        [InlineData("johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "doe", "1234567890", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum lenghth for the first name is 50 characters.")]
         [InlineData("john", "", "1234567890", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Last name is required.")]
-        [InlineData("johndoe123", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "1234567890", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum lenghth for the last name is 50 characters.")]
         [InlineData("john", "doe", "", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Phone number is required.")]
+        [InlineData("johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "doe", "1234567890", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the first name is 50 characters.")]
+        [InlineData("johndoe123", "johndoe123TooLongUsernameTooLongUsernameTooLongjohndoe123TooLongUsernameTooLongUsernameTooLong", "1234567890", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Maximum length for the last name is 50 characters.")]
+        [InlineData("d", "doe", "1234567890", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the first name is 2 characters.")]
+        [InlineData("johndoe123", "d", "1234567890", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the last name is 2 characters.")]
+        [InlineData("uy", "uy", "1234", "e9a0db04-5ef8-499b-c1ac-08db86d2cc0d", "Minimum length for the phone number is 5 characters.")]
         public void InvalidContactCreationDto_ValidationErrors(string firstName, string lastName, string phoneNumber, Guid userId, string expectedErrorMessage)
         {
             // Arrange
