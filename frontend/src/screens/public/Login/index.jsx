@@ -173,7 +173,7 @@ const Login = () => {
                 )}
 
                 <Button
-                  type={buttonTypes.TEXT.VIOLET}
+                  type={buttonTypes.TEXT.GREEN}
                   className={styles.Login_content_forgotPassword}
                   onClick={() => toggleIsForgotPassword(true)}
                 >
