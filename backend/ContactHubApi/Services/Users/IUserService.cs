@@ -28,11 +28,11 @@ namespace ContactHubApi.Services.Users
         public Task<UserUIDetailsDto?> GetUserByUsername(string username);
 
         /// <summary>
-        /// Gets a user by username with token details
+        /// Gets a user by email
         /// </summary>
-        /// <param name="username">Username of a user</param>
-        /// <returns>User with Token details with username the same as the param</returns>
-        public Task<UserTokenDto?> GetUserByUsernameWithToken(string username);
+        /// <param name="email">Email of a user</param>
+        /// <returns>UserUIDetailsDto with email the same as the param</returns>
+        public Task<UserUIDetailsDto?> GetUserByEmail(string email);
 
         /// <summary>
         /// Checks if a user with the same email exists
