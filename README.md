@@ -15,7 +15,11 @@
 5.  Open your browser and go to localhost port for the frontend (default: 3000)
 6.  That's it! You can now use the application
 
-**Note:** The environment might also take some time to load since we are pulling an image from [Microsoft Sql Server](https://hub.docker.com/_/microsoft-mssql-server#!), it make some time to set up the temporary database.
+**Note:**
+
+- The environment might also take some time to load since we are pulling an image from [Microsoft Sql Server](https://hub.docker.com/_/microsoft-mssql-server#!), it make some time to set up the temporary database.
+
+- In order for the forget password functionality to work, you need to input your own email and password in the [appsettings.json](backend/appsettings.json) file. Your email must enable the 2 step verification and generate an app password for the functionality to work. I purposely left a default one for privacy reasons.
 
 ## Docker Images in Docker Hub
 
