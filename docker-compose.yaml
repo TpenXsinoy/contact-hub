@@ -46,6 +46,6 @@ services:
     networks:
       - contacthub-network
     environment:
-      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
     stdin_open: true
     tty: true
