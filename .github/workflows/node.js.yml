@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 16.x
       - name: Install dependencies
-        run: npm install --prefix frontend
+        run: npm install --legacy-peer-deps --prefix frontend
       - name: Build React app
         env:
           CI: false
