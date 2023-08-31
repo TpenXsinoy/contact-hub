@@ -4,11 +4,16 @@
 
 ### Visit the website at [Contact Hub](https://contacthubapp.azurewebsites.net/login)
 
-**Note:** The website may take some time to load as it is hosted on a free tier of Azure.
+**Note:** The website may take some time to load and can only be accessed 60 minutes per day as it is hosted on a free tier of Azure.
 
 # Starting the Application with Docker
 
-run `docker-compose up` in terminal
+1.  Clone the repository
+2.  Start your Docker Desktop
+3.  Open terminal and navigate to the root directory of the project
+4.  Run `docker-compose up` in terminal
+5.  Open your browser and go to localhost port for the frontend (default: 3000)
+6.  That's it! You can now use the application
 
 **Note:** The environment might also take some time to load since we are pulling an image from [Microsoft Sql Server](https://hub.docker.com/_/microsoft-mssql-server#!), it make some time to set up the temporary database.
 
@@ -16,41 +21,13 @@ run `docker-compose up` in terminal
 
 [Backend Image Repository Link](https://hub.docker.com/repository/docker/tpenxsinoy123/contacthubapi/general)
 
-`docker push tpenxsinoy123/contacthubapi:tagname`
-
 `docker pull tpenxsinoy123/contacthubapi:tagname`
 
 [Frontend Image Repository Link](https://hub.docker.com/repository/docker/tpenxsinoy123/contacthubapp/general)
-
-`docker push tpenxsinoy123/contacthubapp:tagname`
 
 `docker pull tpenxsinoy123/contacthubapp:tagname`
 
 [Microsoft Sql Server Repository Link](https://hub.docker.com/_/microsoft-mssql-server#!)
 
 `docker pull mcr.microsoft.com/mssql/server:2022-latest`
-
-# Deployment
-
-The application is hosted on Azure, utilizing Azure App Service for deployment and Azure SQL Database for data storage. Additionally, both the Backend and Frontend components are consistently deployed through the Azure Container Registry.
-
-### Docker Container Registry Credentials
-
-```docker
-Registry name: contacthubdocker
-Login server: contacthubdocker.azurecr.io
-Username: contacthubdocker
-Password: iJLHkcUUKfE9QYz7tsVhZlUY/P0EUNt1ncMGeMxo33+ACRAi/AaI
-```
-
-### Backend Image
-
-`docker push contacthubdocker.azurecr.io/contacthubapi:latest`
-
-`docker pull contacthubdocker.azurecr.io/contacthubapi:latest`
-
-### Frontend Image
-
-`docker push contacthubdocker.azurecr.io/contacthub-app:latest`
-
-`docker pull contacthubdocker.azurecr.io/contacthub-app:latest`
+test
