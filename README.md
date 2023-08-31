@@ -30,4 +30,3 @@
 [Microsoft Sql Server Repository Link](https://hub.docker.com/_/microsoft-mssql-server#!)
 
 `docker pull mcr.microsoft.com/mssql/server:2022-latest`
-test
