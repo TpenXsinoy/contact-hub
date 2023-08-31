@@ -5,9 +5,9 @@ name: .NET
 
 on:
   push:
-    branches: ["master", "dev"]
+    branches: ["main", "dev"]
   pull_request:
-    branches: ["master", "dev"]
+    branches: ["main", "dev"]
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: quiz-api/QuizApi
+        working-directory: backend/ContactHubApi
 
     steps:
       - uses: actions/checkout@v3

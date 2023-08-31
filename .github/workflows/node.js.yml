@@ -5,9 +5,9 @@ name: Build
 
 on:
   push:
-    branches: ["dev", "dev"]
+    branches: ["main", "dev"]
   pull_request:
-    branches: ["dev", "dev"]
+    branches: ["main", "dev"]
 
 jobs:
   build:
@@ -22,8 +22,8 @@ jobs:
         with:
           node-version: 16.x
       - name: Install dependencies
-        run: npm install --prefix quiz-app
+        run: npm install --prefix frontend
       - name: Build React app
         env:
           CI: false
-        run: npm run build --prefix quiz-app
+        run: npm run build --prefix frontend
